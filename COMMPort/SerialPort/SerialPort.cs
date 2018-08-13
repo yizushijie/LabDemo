@@ -286,14 +286,30 @@ namespace COMMPortLib
 			}
 		}
 
-		#endregion
 
-		#region 构造函数
+        /// <summary>
+        /// 
+        /// </summary>
+        public override int m_DeviceID
+        {
+            get
+            {
+                return base.m_DeviceID;
+            }
+            set
+            {
+                base.m_DeviceID = value;
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public SerialCOMMPort() : base()
+        #endregion
+
+        #region 构造函数
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public SerialCOMMPort() : base()
 		{
 
 		}
@@ -312,11 +328,28 @@ namespace COMMPortLib
 			this.m_COMMPortForm = usedForm;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="usedForm"></param>
-		public SerialCOMMPort(Form usedForm, int bandRate, int size)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usedForm"></param>
+        /// <param name="deviceID"></param>
+        public SerialCOMMPort(Form usedForm, int deviceID)
+        {
+            if (this.m_COMMPortForm == null)
+            {
+                this.m_COMMPortForm = new Form();
+            }
+
+            this.m_COMMPortForm = usedForm;
+            //---设置多设备通信的设备ID地址
+            this.m_DeviceID = deviceID;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usedForm"></param>
+        public SerialCOMMPort(Form usedForm, int bandRate, int size)
 		{
 			if (this.m_COMMPortForm == null)
 			{
@@ -935,7 +968,9 @@ namespace COMMPortLib
 		public override int SendCmd(byte[] cmd)
 		{
 			int _return = 1;
-			if ((this.usedSerialPort!=null)&&(this.usedSerialPort.IsOpen))
+            int length = 0;
+            int i = 0;
+            if ((this.usedSerialPort!=null)&&(this.usedSerialPort.IsOpen))
 			{
 				//---检查缓存区中的数据是否发送完成并等待发送完成
 				while (this.usedSerialPort.BytesToWrite > 0)
@@ -943,8 +978,44 @@ namespace COMMPortLib
 					//---窗体函数的响应
 					Application.DoEvents();
 				}
-				//---存储发送的数据
-				this.m_COMMPortSendBytes = new COMMPortBytes();
+                //----判断是否需要增加设备ID信息
+                if ((this.m_DeviceID>0)&&(this.m_DeviceID!=0x00))
+                {
+                    byte[] tempCMD = new byte[cmd.Length];
+                    Array.Copy(cmd, tempCMD, cmd.Length);
+                    cmd = new byte[tempCMD.Length + 1];
+                    if (cmd.Length > 250)
+                    {
+                        length = 3;
+                    }
+                    else
+                    {
+                        length = 2;
+                    }
+                    Array.Copy(tempCMD, length,cmd, (length + 1), (tempCMD.Length - length));
+                    cmd[length] = (byte)this.m_DeviceID;
+                    for ( i = 0; i < length; i++)
+                    {
+                        cmd[i] = tempCMD[i];
+                    }
+
+                }
+                //---修正数据长度
+                length = cmd.Length;
+                //---判断要发送数据的长度
+                if (length > 250)
+                {
+                    length -= 3;
+                    cmd[1] = (byte)(length >> 8);
+                    cmd[2] = (byte)length;
+                }
+                else
+                {
+                    length -= 2;
+                    cmd[1] = (byte)length;
+                }
+                //---存储发送的数据
+                this.m_COMMPortSendBytes = new COMMPortBytes();
 				//---CRC校验等级
 				if (this.m_COMMPortSendCRC==(byte)USE_CRC.CRC_CHECKSUM)
 				{
@@ -996,7 +1067,7 @@ namespace COMMPortLib
 					this.m_COMMPortSendBytes.crcVal = crc32;
 				}
 				//---重新修正数据长度
-				int length = cmd.Length;
+				length = cmd.Length;
 				//---判断要发送数据的长度
 				if (length>250)
 				{
@@ -1010,7 +1081,7 @@ namespace COMMPortLib
 					cmd[1] = (byte)length;
 				}
 
-				int i = 0;
+				i = 0;
 				for (i = 0; i < length; i++)
 				{
 					this.m_COMMPortSendBytes.dateBytes.Add(cmd[i]);

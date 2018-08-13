@@ -48,8 +48,34 @@ namespace DigitalControlRFLib
 		CMD_HMC472_READ_RFG		    = 29,		//---读取207M信号源的衰减功率
 		CMD_HMC472_WRITE_RFG		= 30,		//---修改207M信号源的衰减功率
 		CMD_HMC472_READ_RFH		    = 31,		//---读取433M大信号源的衰减功率
-		CMD_HMC472_WRITE_RFH		= 32,		//---修改433M大信号源的衰减功率
-	};	
+		CMD_HMC472_WRITE_RFH		= 32,       //---修改433M大信号源的衰减功率
+
+		CMD_HMC472_POWER_RF         = 33, //---HMC472的通道功率的输出值
+
+	};
+
+	public enum GEN_SIGNAL : byte
+	{
+		GEN_SIGNAL_NONE  = 0,
+		GEN_SIGNAL_433MS = 1,
+		GEN_SIGNAL_315M  = 2,
+		GEN_SIGNAL_207M  = 3,
+		GEN_SIGNAL_433MB = 4,
+	}
+
+	public enum RF_CHANNEL : byte
+	{
+		RF_NONE = 0,
+		RF_A    = 1,
+		RF_B    = 2,
+		RF_C    = 3,
+		RF_D    = 4,
+		RF_E    = 5,
+		RF_F    = 6,
+		RF_G    = 7,
+		RF_H    = 8,
+	}
+
 	public class DigitalControlRF
 	{
 		#region 变量定义
@@ -519,21 +545,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF315M };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF315M) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -550,7 +576,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF315M, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -558,13 +584,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF315M) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -582,21 +608,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF207M };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF207M) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -613,7 +639,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF207M, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -621,13 +647,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF207M) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -645,21 +671,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MB };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MB) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -676,7 +702,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MB, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -684,13 +710,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MB) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -708,21 +734,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFA };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFA) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFA信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFA信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -739,7 +765,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFA, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -747,13 +773,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFA) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFA信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFA信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -771,21 +797,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFB };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFB) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFB信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFB信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -802,7 +828,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFB, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -810,13 +836,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFB) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFB信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFB信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -834,21 +860,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFC };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFC) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFC信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFC信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -865,7 +891,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFC, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -873,13 +899,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFC) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFC信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFC信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -897,21 +923,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFD };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFD) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFD信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFD信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -928,7 +954,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFD, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -936,13 +962,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFD) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFD信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFD信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -960,21 +986,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFE };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFE) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFE信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFE信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -991,7 +1017,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFE, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -999,13 +1025,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFE) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFE信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFE信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -1022,21 +1048,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFF };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFF) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFF信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFF信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -1053,7 +1079,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFF, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -1061,13 +1087,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFF) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFF信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFF信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -1084,21 +1110,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFG };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFG) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFG信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFG信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -1115,7 +1141,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFG, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -1123,13 +1149,13 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFG) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFG信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFG信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -1147,21 +1173,21 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS };
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFH };
 				byte[] res = null;
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_READ_RFH) && (res[4] == 0x00))
 				{
 					int dBm = res[5];
 					dBm = (dBm << 8) + res[6];
 					decimal dBmVal = dBm;
 					dBmVal = dBmVal * (decimal)0.10;
 					nud.Value = -dBmVal;
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFH信号源功率衰减值，读取成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFH信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
@@ -1178,7 +1204,7 @@ namespace DigitalControlRFLib
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
 			{
-				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS, 0x00 };
+				byte[] cmd = new byte[] { 0x55, 0x03, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFH, 0x00 };
 				decimal dBmVal = nud.Value;
 				dBmVal = dBmVal * (decimal)(-10.0);
 				int dBm = (int)dBmVal;
@@ -1186,14 +1212,96 @@ namespace DigitalControlRFLib
 				byte[] res = null;
 				//---数据传输
 				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
-				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS) && (res[4] == 0x00))
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RFH) && (res[4] == 0x00))
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入成功!\r\n", Color.Black, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFH信号源功率衰减值，写入成功!\r\n", Color.Black, false);
 				}
 				else
 				{
-					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFH信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="genSignal"></param>
+		/// <param name="rfChannel"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public int ReadPower(ComboBox genSignal, ComboBox rfChannel, NumericUpDown nud, RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x04, CMD_HMC472, (byte)HMC472_CMD_MENU.CMD_HMC472_POWER_RF, (byte)GEN_SIGNAL.GEN_SIGNAL_NONE,(byte)RF_CHANNEL.RF_NONE };
+				switch (genSignal.Text)
+				{
+					case "433M小信号源":
+						cmd[4] = (byte)GEN_SIGNAL.GEN_SIGNAL_433MS;
+						break;
+					case "315M信号源":
+						cmd[4] = (byte)GEN_SIGNAL.GEN_SIGNAL_315M;
+						break;
+					case "207M信号源":
+						cmd[4] = (byte)GEN_SIGNAL.GEN_SIGNAL_207M;
+						break;
+					case "433M大信号源":
+						cmd[4] = (byte)GEN_SIGNAL.GEN_SIGNAL_433MB;
+						break;
+					default:
+						cmd[4] = (byte) GEN_SIGNAL.GEN_SIGNAL_NONE;
+						break;
+				}
+				switch (rfChannel.Text)
+				{
+					case "RF通道A":
+						cmd[5] = (byte)RF_CHANNEL.RF_A;
+						break;
+					case "RF通道B":
+						cmd[5] = (byte)RF_CHANNEL.RF_B;
+						break;
+					case "RF通道C":
+						cmd[5] = (byte)RF_CHANNEL.RF_C;
+						break;
+					case "RF通道D":
+						cmd[5] = (byte)RF_CHANNEL.RF_D;
+						break;
+					case "RF通道E":
+						cmd[5] = (byte)RF_CHANNEL.RF_E;
+						break;
+					case "RF通道F":
+						cmd[5] = (byte)RF_CHANNEL.RF_F;
+						break;
+					case "RF通道G":
+						cmd[5] = (byte)RF_CHANNEL.RF_G;
+						break;
+					case "RF通道H":
+						cmd[5] = (byte)RF_CHANNEL.RF_H;
+						break;
+					default:
+						cmd[5] = (byte)RF_CHANNEL.RF_NONE;
+						break;
+				}
+
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((_return == 0) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2] == CMD_HMC472) && (res[3] == (byte)HMC472_CMD_MENU.CMD_HMC472_POWER_RF) && (res[4] == 0x00))
+				{
+					int dBm = res[5];
+					dBm = (dBm << 8) + res[6];
+					decimal dBmVal = dBm;
+					dBmVal = dBmVal * (decimal)0.10;
+					nud.Value = -dBmVal;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "信号源输出功率值，读取成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "信号源输出功率值，读取失败!\r\n", Color.Red, false);
+				}
+
 			}
 			return _return;
 		}

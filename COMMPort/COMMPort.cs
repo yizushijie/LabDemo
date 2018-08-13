@@ -181,6 +181,11 @@ namespace COMMPortLib
 		/// </summary>
 	    private COMMDevice[] commPortDevices = null;
 
+        /// <summary>
+        /// 设备的ID信息，用于多设备的通信
+        /// </summary>
+        private int deviceID = 0x00;
+
 		#endregion
 
 		#region 属性定义
@@ -424,14 +429,29 @@ namespace COMMPortLib
 		    }
 	    }
 
-		#endregion
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual int m_DeviceID
+        {
+            get
+            {
+                return this.deviceID;
+            }
+            set
+            {
+                this.deviceID = value;
+            }
+        }
 
-		#region 构造函数
+        #endregion
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public COMMPort()
+        #region 构造函数
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public COMMPort()
 	    {
 
 	    }
@@ -445,11 +465,21 @@ namespace COMMPortLib
 		    
 	    }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="usedForm"></param>
-		public COMMPort(Form usedForm, int bandRate, int size)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usedForm"></param>
+        /// <param name="deviceID"></param>
+        public COMMPort(Form usedForm,int deviceID)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usedForm"></param>
+        public COMMPort(Form usedForm, int bandRate, int size)
 		{
 			
 		}

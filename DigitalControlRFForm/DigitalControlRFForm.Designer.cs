@@ -134,22 +134,15 @@
 			this.label_315MRFPowerUnite = new System.Windows.Forms.Label();
 			this.numericUpDown_315MRFPower = new System.Windows.Forms.NumericUpDown();
 			this.label_315MRFPower = new System.Windows.Forms.Label();
-			this.numericUpDown17 = new System.Windows.Forms.NumericUpDown();
-			this.label31 = new System.Windows.Forms.Label();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
-			this.label33 = new System.Windows.Forms.Label();
-			this.numericUpDown18 = new System.Windows.Forms.NumericUpDown();
-			this.label34 = new System.Windows.Forms.Label();
-			this.label32 = new System.Windows.Forms.Label();
-			this.comboBox3 = new System.Windows.Forms.ComboBox();
-			this.label35 = new System.Windows.Forms.Label();
-			this.numericUpDown19 = new System.Windows.Forms.NumericUpDown();
-			this.label37 = new System.Windows.Forms.Label();
-			this.label36 = new System.Windows.Forms.Label();
-			this.button21 = new System.Windows.Forms.Button();
-			this.button34 = new System.Windows.Forms.Button();
-			this.label38 = new System.Windows.Forms.Label();
-			this.panel16 = new System.Windows.Forms.Panel();
+			this.panel_ReadPower = new System.Windows.Forms.Panel();
+			this.button_ReadPower = new System.Windows.Forms.Button();
+			this.comboBox_RFChannel = new System.Windows.Forms.ComboBox();
+			this.label_RFChannel = new System.Windows.Forms.Label();
+			this.comboBox_RFGenSignal = new System.Windows.Forms.ComboBox();
+			this.label_RFGenSignal = new System.Windows.Forms.Label();
+			this.label_RFUnite = new System.Windows.Forms.Label();
+			this.numericUpDown_RFPower = new System.Windows.Forms.NumericUpDown();
+			this.label_RFPower = new System.Windows.Forms.Label();
 			this.panel_PortName.SuspendLayout();
 			this.groupBox_BasicConfig.SuspendLayout();
 			this.panel_433MSRF.SuspendLayout();
@@ -185,10 +178,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_207MRFPower)).BeginInit();
 			this.panel_315MRF.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_315MRFPower)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
-			this.panel16.SuspendLayout();
+			this.panel_ReadPower.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_RFPower)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel_PortName
@@ -245,7 +236,7 @@
 			this.groupBox_BasicConfig.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox_BasicConfig.Location = new System.Drawing.Point(0, 0);
 			this.groupBox_BasicConfig.Name = "groupBox_BasicConfig";
-			this.groupBox_BasicConfig.Size = new System.Drawing.Size(803, 58);
+			this.groupBox_BasicConfig.Size = new System.Drawing.Size(804, 58);
 			this.groupBox_BasicConfig.TabIndex = 1;
 			this.groupBox_BasicConfig.TabStop = false;
 			// 
@@ -256,7 +247,7 @@
 			this.richTextBox_Msg.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.richTextBox_Msg.Location = new System.Drawing.Point(0, 433);
 			this.richTextBox_Msg.Name = "richTextBox_Msg";
-			this.richTextBox_Msg.Size = new System.Drawing.Size(803, 192);
+			this.richTextBox_Msg.Size = new System.Drawing.Size(804, 192);
 			this.richTextBox_Msg.TabIndex = 4;
 			this.richTextBox_Msg.Text = "";
 			// 
@@ -440,7 +431,7 @@
 			this.groupBox_RFConfig.Controls.Add(this.panel_433MSRF);
 			this.groupBox_RFConfig.Location = new System.Drawing.Point(0, 61);
 			this.groupBox_RFConfig.Name = "groupBox_RFConfig";
-			this.groupBox_RFConfig.Size = new System.Drawing.Size(803, 326);
+			this.groupBox_RFConfig.Size = new System.Drawing.Size(804, 326);
 			this.groupBox_RFConfig.TabIndex = 2;
 			this.groupBox_RFConfig.TabStop = false;
 			this.groupBox_RFConfig.Text = "RF信号源配置";
@@ -1486,235 +1477,130 @@
 			this.label_315MRFPower.TabIndex = 0;
 			this.label_315MRFPower.Text = "315MB_RF：";
 			// 
-			// numericUpDown17
+			// panel_ReadPower
 			// 
-			this.numericUpDown17.DecimalPlaces = 2;
-			this.numericUpDown17.Increment = new decimal(new int[] {
+			this.panel_ReadPower.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel_ReadPower.Controls.Add(this.label_RFUnite);
+			this.panel_ReadPower.Controls.Add(this.numericUpDown_RFPower);
+			this.panel_ReadPower.Controls.Add(this.label_RFPower);
+			this.panel_ReadPower.Controls.Add(this.button_ReadPower);
+			this.panel_ReadPower.Controls.Add(this.comboBox_RFChannel);
+			this.panel_ReadPower.Controls.Add(this.label_RFChannel);
+			this.panel_ReadPower.Controls.Add(this.comboBox_RFGenSignal);
+			this.panel_ReadPower.Controls.Add(this.label_RFGenSignal);
+			this.panel_ReadPower.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.panel_ReadPower.Location = new System.Drawing.Point(3, 387);
+			this.panel_ReadPower.Name = "panel_ReadPower";
+			this.panel_ReadPower.Size = new System.Drawing.Size(797, 40);
+			this.panel_ReadPower.TabIndex = 9;
+			// 
+			// button_ReadPower
+			// 
+			this.button_ReadPower.Location = new System.Drawing.Point(499, 11);
+			this.button_ReadPower.Name = "button_ReadPower";
+			this.button_ReadPower.Size = new System.Drawing.Size(48, 23);
+			this.button_ReadPower.TabIndex = 5;
+			this.button_ReadPower.Text = "读取";
+			this.button_ReadPower.UseVisualStyleBackColor = true;
+			// 
+			// comboBox_RFChannel
+			// 
+			this.comboBox_RFChannel.FormattingEnabled = true;
+			this.comboBox_RFChannel.Items.AddRange(new object[] {
+            "RF通道A",
+            "RF通道B",
+            "RF通道C",
+            "RF通道D",
+            "RF通道E",
+            "RF通道F",
+            "RF通道G",
+            "RF通道H"});
+			this.comboBox_RFChannel.Location = new System.Drawing.Point(222, 11);
+			this.comboBox_RFChannel.Name = "comboBox_RFChannel";
+			this.comboBox_RFChannel.Size = new System.Drawing.Size(81, 20);
+			this.comboBox_RFChannel.TabIndex = 4;
+			this.comboBox_RFChannel.Text = "RF通道A";
+			// 
+			// label_RFChannel
+			// 
+			this.label_RFChannel.AutoSize = true;
+			this.label_RFChannel.Location = new System.Drawing.Point(166, 14);
+			this.label_RFChannel.Name = "label_RFChannel";
+			this.label_RFChannel.Size = new System.Drawing.Size(53, 12);
+			this.label_RFChannel.TabIndex = 3;
+			this.label_RFChannel.Text = "RF通道：";
+			// 
+			// comboBox_RFGenSignal
+			// 
+			this.comboBox_RFGenSignal.FormattingEnabled = true;
+			this.comboBox_RFGenSignal.Items.AddRange(new object[] {
+            "433M小信号源",
+            "315M信号源",
+            "207M信号源",
+            "433M大信号源"});
+			this.comboBox_RFGenSignal.Location = new System.Drawing.Point(55, 11);
+			this.comboBox_RFGenSignal.Name = "comboBox_RFGenSignal";
+			this.comboBox_RFGenSignal.Size = new System.Drawing.Size(95, 20);
+			this.comboBox_RFGenSignal.TabIndex = 2;
+			this.comboBox_RFGenSignal.Text = "433M小信号源";
+			// 
+			// label_RFGenSignal
+			// 
+			this.label_RFGenSignal.AutoSize = true;
+			this.label_RFGenSignal.Location = new System.Drawing.Point(3, 14);
+			this.label_RFGenSignal.Name = "label_RFGenSignal";
+			this.label_RFGenSignal.Size = new System.Drawing.Size(53, 12);
+			this.label_RFGenSignal.TabIndex = 1;
+			this.label_RFGenSignal.Text = "信号源：";
+			// 
+			// label_RFUnite
+			// 
+			this.label_RFUnite.AutoSize = true;
+			this.label_RFUnite.Location = new System.Drawing.Point(454, 14);
+			this.label_RFUnite.Name = "label_RFUnite";
+			this.label_RFUnite.Size = new System.Drawing.Size(23, 12);
+			this.label_RFUnite.TabIndex = 8;
+			this.label_RFUnite.Text = "dBm";
+			// 
+			// numericUpDown_RFPower
+			// 
+			this.numericUpDown_RFPower.DecimalPlaces = 2;
+			this.numericUpDown_RFPower.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-			this.numericUpDown17.Location = new System.Drawing.Point(180, 7);
-			this.numericUpDown17.Maximum = new decimal(new int[] {
-            0,
+			this.numericUpDown_RFPower.Location = new System.Drawing.Point(385, 10);
+			this.numericUpDown_RFPower.Maximum = new decimal(new int[] {
+            20,
             0,
             0,
             0});
-			this.numericUpDown17.Minimum = new decimal(new int[] {
-            120,
+			this.numericUpDown_RFPower.Minimum = new decimal(new int[] {
+            150,
             0,
             0,
             -2147483648});
-			this.numericUpDown17.Name = "numericUpDown17";
-			this.numericUpDown17.Size = new System.Drawing.Size(72, 21);
-			this.numericUpDown17.TabIndex = 1;
-			this.numericUpDown17.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.numericUpDown17.Value = new decimal(new int[] {
-            41,
-            0,
-            0,
-            -2147483648});
+			this.numericUpDown_RFPower.Name = "numericUpDown_RFPower";
+			this.numericUpDown_RFPower.Size = new System.Drawing.Size(63, 21);
+			this.numericUpDown_RFPower.TabIndex = 7;
+			this.numericUpDown_RFPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
-			// label31
+			// label_RFPower
 			// 
-			this.label31.AutoSize = true;
-			this.label31.Location = new System.Drawing.Point(258, 11);
-			this.label31.Name = "label31";
-			this.label31.Size = new System.Drawing.Size(23, 12);
-			this.label31.TabIndex = 2;
-			this.label31.Text = "dBm";
-			// 
-			// comboBox2
-			// 
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Items.AddRange(new object[] {
-            "433MS",
-            "315M",
-            "207M",
-            "433MB"});
-			this.comboBox2.Location = new System.Drawing.Point(74, 6);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(62, 20);
-			this.comboBox2.TabIndex = 4;
-			this.comboBox2.Text = "433MS";
-			// 
-			// label33
-			// 
-			this.label33.AutoSize = true;
-			this.label33.Location = new System.Drawing.Point(9, 11);
-			this.label33.Name = "label33";
-			this.label33.Size = new System.Drawing.Size(59, 12);
-			this.label33.TabIndex = 5;
-			this.label33.Text = "RF信号源:";
-			// 
-			// numericUpDown18
-			// 
-			this.numericUpDown18.DecimalPlaces = 2;
-			this.numericUpDown18.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-			this.numericUpDown18.Location = new System.Drawing.Point(328, 6);
-			this.numericUpDown18.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.numericUpDown18.Minimum = new decimal(new int[] {
-            315,
-            0,
-            0,
-            -2147418112});
-			this.numericUpDown18.Name = "numericUpDown18";
-			this.numericUpDown18.Size = new System.Drawing.Size(63, 21);
-			this.numericUpDown18.TabIndex = 6;
-			this.numericUpDown18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// label34
-			// 
-			this.label34.AutoSize = true;
-			this.label34.Location = new System.Drawing.Point(397, 11);
-			this.label34.Name = "label34";
-			this.label34.Size = new System.Drawing.Size(23, 12);
-			this.label34.TabIndex = 7;
-			this.label34.Text = "dBm";
-			// 
-			// label32
-			// 
-			this.label32.AutoSize = true;
-			this.label32.Location = new System.Drawing.Point(287, 12);
-			this.label32.Name = "label32";
-			this.label32.Size = new System.Drawing.Size(35, 12);
-			this.label32.TabIndex = 8;
-			this.label32.Text = "功率:";
-			// 
-			// comboBox3
-			// 
-			this.comboBox3.FormattingEnabled = true;
-			this.comboBox3.Items.AddRange(new object[] {
-            "RF_A",
-            "RF_B",
-            "RF_C",
-            "RF_D",
-            "RF_E",
-            "RF_F",
-            "RF_G",
-            "RF_H"});
-			this.comboBox3.Location = new System.Drawing.Point(474, 7);
-			this.comboBox3.Name = "comboBox3";
-			this.comboBox3.Size = new System.Drawing.Size(62, 20);
-			this.comboBox3.TabIndex = 10;
-			this.comboBox3.Text = "RF_A";
-			// 
-			// label35
-			// 
-			this.label35.AutoSize = true;
-			this.label35.Location = new System.Drawing.Point(424, 12);
-			this.label35.Name = "label35";
-			this.label35.Size = new System.Drawing.Size(47, 12);
-			this.label35.TabIndex = 11;
-			this.label35.Text = "RF通道:";
-			// 
-			// numericUpDown19
-			// 
-			this.numericUpDown19.DecimalPlaces = 2;
-			this.numericUpDown19.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-			this.numericUpDown19.Location = new System.Drawing.Point(589, 7);
-			this.numericUpDown19.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.numericUpDown19.Minimum = new decimal(new int[] {
-            315,
-            0,
-            0,
-            -2147418112});
-			this.numericUpDown19.Name = "numericUpDown19";
-			this.numericUpDown19.Size = new System.Drawing.Size(63, 21);
-			this.numericUpDown19.TabIndex = 12;
-			this.numericUpDown19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// label37
-			// 
-			this.label37.AutoSize = true;
-			this.label37.Location = new System.Drawing.Point(658, 12);
-			this.label37.Name = "label37";
-			this.label37.Size = new System.Drawing.Size(23, 12);
-			this.label37.TabIndex = 13;
-			this.label37.Text = "dBm";
-			// 
-			// label36
-			// 
-			this.label36.AutoSize = true;
-			this.label36.Location = new System.Drawing.Point(542, 13);
-			this.label36.Name = "label36";
-			this.label36.Size = new System.Drawing.Size(35, 12);
-			this.label36.TabIndex = 14;
-			this.label36.Text = "功率:";
-			// 
-			// button21
-			// 
-			this.button21.Location = new System.Drawing.Point(687, 7);
-			this.button21.Name = "button21";
-			this.button21.Size = new System.Drawing.Size(48, 23);
-			this.button21.TabIndex = 17;
-			this.button21.Text = "读取";
-			this.button21.UseVisualStyleBackColor = true;
-			// 
-			// button34
-			// 
-			this.button34.Location = new System.Drawing.Point(741, 7);
-			this.button34.Name = "button34";
-			this.button34.Size = new System.Drawing.Size(48, 23);
-			this.button34.TabIndex = 18;
-			this.button34.Text = "写入";
-			this.button34.UseVisualStyleBackColor = true;
-			// 
-			// label38
-			// 
-			this.label38.AutoSize = true;
-			this.label38.Location = new System.Drawing.Point(142, 12);
-			this.label38.Name = "label38";
-			this.label38.Size = new System.Drawing.Size(35, 12);
-			this.label38.TabIndex = 19;
-			this.label38.Text = "功率:";
-			// 
-			// panel16
-			// 
-			this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.panel16.Controls.Add(this.label38);
-			this.panel16.Controls.Add(this.button34);
-			this.panel16.Controls.Add(this.button21);
-			this.panel16.Controls.Add(this.label36);
-			this.panel16.Controls.Add(this.label37);
-			this.panel16.Controls.Add(this.numericUpDown19);
-			this.panel16.Controls.Add(this.label35);
-			this.panel16.Controls.Add(this.comboBox3);
-			this.panel16.Controls.Add(this.label32);
-			this.panel16.Controls.Add(this.label34);
-			this.panel16.Controls.Add(this.numericUpDown18);
-			this.panel16.Controls.Add(this.label33);
-			this.panel16.Controls.Add(this.comboBox2);
-			this.panel16.Controls.Add(this.label31);
-			this.panel16.Controls.Add(this.numericUpDown17);
-			this.panel16.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel16.Location = new System.Drawing.Point(3, 387);
-			this.panel16.Name = "panel16";
-			this.panel16.Size = new System.Drawing.Size(797, 40);
-			this.panel16.TabIndex = 9;
+			this.label_RFPower.AutoSize = true;
+			this.label_RFPower.Location = new System.Drawing.Point(326, 14);
+			this.label_RFPower.Name = "label_RFPower";
+			this.label_RFPower.Size = new System.Drawing.Size(53, 12);
+			this.label_RFPower.TabIndex = 6;
+			this.label_RFPower.Text = "RF功率：";
 			// 
 			// DigitalControlRFMenuForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(803, 625);
-			this.Controls.Add(this.panel16);
+			this.ClientSize = new System.Drawing.Size(804, 625);
+			this.Controls.Add(this.panel_ReadPower);
 			this.Controls.Add(this.richTextBox_Msg);
 			this.Controls.Add(this.groupBox_BasicConfig);
 			this.Controls.Add(this.groupBox_RFConfig);
@@ -1776,11 +1662,9 @@
 			this.panel_315MRF.ResumeLayout(false);
 			this.panel_315MRF.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_315MRFPower)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
-			this.panel16.ResumeLayout(false);
-			this.panel16.PerformLayout();
+			this.panel_ReadPower.ResumeLayout(false);
+			this.panel_ReadPower.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_RFPower)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1891,23 +1775,16 @@
 		private System.Windows.Forms.Label label_315MRFPowerUnite;
 		private System.Windows.Forms.NumericUpDown numericUpDown_315MRFPower;
 		private System.Windows.Forms.Label label_315MRFPower;
-		private System.Windows.Forms.NumericUpDown numericUpDown17;
-		private System.Windows.Forms.Label label31;
-		private System.Windows.Forms.ComboBox comboBox2;
-		private System.Windows.Forms.Label label33;
-		private System.Windows.Forms.NumericUpDown numericUpDown18;
-		private System.Windows.Forms.Label label34;
-		private System.Windows.Forms.Label label32;
-		private System.Windows.Forms.ComboBox comboBox3;
-		private System.Windows.Forms.Label label35;
-		private System.Windows.Forms.NumericUpDown numericUpDown19;
-		private System.Windows.Forms.Label label37;
-		private System.Windows.Forms.Label label36;
-		private System.Windows.Forms.Button button21;
-		private System.Windows.Forms.Button button34;
-		private System.Windows.Forms.Label label38;
-		private System.Windows.Forms.Panel panel16;
+		private System.Windows.Forms.Panel panel_ReadPower;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_richTextBox_Msg;
+		private System.Windows.Forms.Label label_RFGenSignal;
+		private System.Windows.Forms.ComboBox comboBox_RFChannel;
+		private System.Windows.Forms.Label label_RFChannel;
+		private System.Windows.Forms.ComboBox comboBox_RFGenSignal;
+		private System.Windows.Forms.Button button_ReadPower;
+		private System.Windows.Forms.Label label_RFUnite;
+		private System.Windows.Forms.NumericUpDown numericUpDown_RFPower;
+		private System.Windows.Forms.Label label_RFPower;
 	}
 }
 
