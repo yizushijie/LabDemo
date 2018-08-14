@@ -186,6 +186,11 @@ namespace COMMPortLib
         /// </summary>
         private int deviceID = 0x00;
 
+		/// <summary>
+		/// 设备ID在命令中的位置
+		/// </summary>
+	    private int deviceIDIndex = 0;
+
 		#endregion
 
 		#region 属性定义
@@ -444,6 +449,24 @@ namespace COMMPortLib
             }
         }
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+	    public virtual int m_DeviceIDIndex
+	    {
+		    get
+		    {
+			    return this.deviceIDIndex;
+
+		    }
+		    set
+		    {
+			    this.deviceIDIndex = value;
+
+		    }
+	    }
+
         #endregion
 
         #region 构造函数
@@ -688,6 +711,16 @@ namespace COMMPortLib
 		public virtual int SendCmdAndReadResponse(byte[] cmd, ref byte[] res, int time = 200)
 		{
 			return 1;
+		}
+
+		/// <summary>
+		/// 接收数据是否有效
+		/// </summary>
+		/// <param name="isOk"></param>
+		/// <returns></returns>
+		public virtual bool IsReadValidData(int isOk)
+		{
+			return false;
 		}
 
 		#endregion

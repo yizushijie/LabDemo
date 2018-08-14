@@ -135,14 +135,16 @@
 			this.numericUpDown_315MRFPower = new System.Windows.Forms.NumericUpDown();
 			this.label_315MRFPower = new System.Windows.Forms.Label();
 			this.panel_ReadPower = new System.Windows.Forms.Panel();
+			this.label_RFUnite = new System.Windows.Forms.Label();
+			this.numericUpDown_RFPower = new System.Windows.Forms.NumericUpDown();
+			this.label_RFPower = new System.Windows.Forms.Label();
 			this.button_ReadPower = new System.Windows.Forms.Button();
 			this.comboBox_RFChannel = new System.Windows.Forms.ComboBox();
 			this.label_RFChannel = new System.Windows.Forms.Label();
 			this.comboBox_RFGenSignal = new System.Windows.Forms.ComboBox();
 			this.label_RFGenSignal = new System.Windows.Forms.Label();
-			this.label_RFUnite = new System.Windows.Forms.Label();
-			this.numericUpDown_RFPower = new System.Windows.Forms.NumericUpDown();
-			this.label_RFPower = new System.Windows.Forms.Label();
+			this.numericUpDown_DeviceID = new System.Windows.Forms.NumericUpDown();
+			this.label_DeviceID = new System.Windows.Forms.Label();
 			this.panel_PortName.SuspendLayout();
 			this.groupBox_BasicConfig.SuspendLayout();
 			this.panel_433MSRF.SuspendLayout();
@@ -180,10 +182,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_315MRFPower)).BeginInit();
 			this.panel_ReadPower.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_RFPower)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_DeviceID)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel_PortName
 			// 
+			this.panel_PortName.Controls.Add(this.label_DeviceID);
+			this.panel_PortName.Controls.Add(this.numericUpDown_DeviceID);
 			this.panel_PortName.Controls.Add(this.button_CloseDevice);
 			this.panel_PortName.Controls.Add(this.button_OpenDevice);
 			this.panel_PortName.Controls.Add(this.label_PortName);
@@ -192,7 +197,7 @@
 			this.panel_PortName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
 			this.panel_PortName.Location = new System.Drawing.Point(3, 17);
 			this.panel_PortName.Name = "panel_PortName";
-			this.panel_PortName.Size = new System.Drawing.Size(253, 38);
+			this.panel_PortName.Size = new System.Drawing.Size(380, 38);
 			this.panel_PortName.TabIndex = 0;
 			// 
 			// button_CloseDevice
@@ -1494,6 +1499,48 @@
 			this.panel_ReadPower.Size = new System.Drawing.Size(797, 40);
 			this.panel_ReadPower.TabIndex = 9;
 			// 
+			// label_RFUnite
+			// 
+			this.label_RFUnite.AutoSize = true;
+			this.label_RFUnite.Location = new System.Drawing.Point(454, 14);
+			this.label_RFUnite.Name = "label_RFUnite";
+			this.label_RFUnite.Size = new System.Drawing.Size(23, 12);
+			this.label_RFUnite.TabIndex = 8;
+			this.label_RFUnite.Text = "dBm";
+			// 
+			// numericUpDown_RFPower
+			// 
+			this.numericUpDown_RFPower.DecimalPlaces = 2;
+			this.numericUpDown_RFPower.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+			this.numericUpDown_RFPower.Location = new System.Drawing.Point(385, 10);
+			this.numericUpDown_RFPower.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+			this.numericUpDown_RFPower.Minimum = new decimal(new int[] {
+            150,
+            0,
+            0,
+            -2147483648});
+			this.numericUpDown_RFPower.Name = "numericUpDown_RFPower";
+			this.numericUpDown_RFPower.Size = new System.Drawing.Size(63, 21);
+			this.numericUpDown_RFPower.TabIndex = 7;
+			this.numericUpDown_RFPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label_RFPower
+			// 
+			this.label_RFPower.AutoSize = true;
+			this.label_RFPower.Location = new System.Drawing.Point(326, 14);
+			this.label_RFPower.Name = "label_RFPower";
+			this.label_RFPower.Size = new System.Drawing.Size(53, 12);
+			this.label_RFPower.TabIndex = 6;
+			this.label_RFPower.Text = "RF功率：";
+			// 
 			// button_ReadPower
 			// 
 			this.button_ReadPower.Location = new System.Drawing.Point(499, 11);
@@ -1553,47 +1600,32 @@
 			this.label_RFGenSignal.TabIndex = 1;
 			this.label_RFGenSignal.Text = "信号源：";
 			// 
-			// label_RFUnite
+			// numericUpDown_DeviceID
 			// 
-			this.label_RFUnite.AutoSize = true;
-			this.label_RFUnite.Location = new System.Drawing.Point(454, 14);
-			this.label_RFUnite.Name = "label_RFUnite";
-			this.label_RFUnite.Size = new System.Drawing.Size(23, 12);
-			this.label_RFUnite.TabIndex = 8;
-			this.label_RFUnite.Text = "dBm";
-			// 
-			// numericUpDown_RFPower
-			// 
-			this.numericUpDown_RFPower.DecimalPlaces = 2;
-			this.numericUpDown_RFPower.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-			this.numericUpDown_RFPower.Location = new System.Drawing.Point(385, 10);
-			this.numericUpDown_RFPower.Maximum = new decimal(new int[] {
-            20,
+			this.numericUpDown_DeviceID.Location = new System.Drawing.Point(310, 9);
+			this.numericUpDown_DeviceID.Maximum = new decimal(new int[] {
+            255,
             0,
             0,
             0});
-			this.numericUpDown_RFPower.Minimum = new decimal(new int[] {
-            150,
+			this.numericUpDown_DeviceID.Name = "numericUpDown_DeviceID";
+			this.numericUpDown_DeviceID.Size = new System.Drawing.Size(63, 21);
+			this.numericUpDown_DeviceID.TabIndex = 3;
+			this.numericUpDown_DeviceID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.numericUpDown_DeviceID.Value = new decimal(new int[] {
+            1,
             0,
             0,
-            -2147483648});
-			this.numericUpDown_RFPower.Name = "numericUpDown_RFPower";
-			this.numericUpDown_RFPower.Size = new System.Drawing.Size(63, 21);
-			this.numericUpDown_RFPower.TabIndex = 7;
-			this.numericUpDown_RFPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            0});
 			// 
-			// label_RFPower
+			// label_DeviceID
 			// 
-			this.label_RFPower.AutoSize = true;
-			this.label_RFPower.Location = new System.Drawing.Point(326, 14);
-			this.label_RFPower.Name = "label_RFPower";
-			this.label_RFPower.Size = new System.Drawing.Size(53, 12);
-			this.label_RFPower.TabIndex = 6;
-			this.label_RFPower.Text = "RF功率：";
+			this.label_DeviceID.AutoSize = true;
+			this.label_DeviceID.Location = new System.Drawing.Point(257, 13);
+			this.label_DeviceID.Name = "label_DeviceID";
+			this.label_DeviceID.Size = new System.Drawing.Size(47, 12);
+			this.label_DeviceID.TabIndex = 2;
+			this.label_DeviceID.Text = "设备ID:";
 			// 
 			// DigitalControlRFMenuForm
 			// 
@@ -1665,6 +1697,7 @@
 			this.panel_ReadPower.ResumeLayout(false);
 			this.panel_ReadPower.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_RFPower)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_DeviceID)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1785,6 +1818,8 @@
 		private System.Windows.Forms.Label label_RFUnite;
 		private System.Windows.Forms.NumericUpDown numericUpDown_RFPower;
 		private System.Windows.Forms.Label label_RFPower;
+		private System.Windows.Forms.Label label_DeviceID;
+		private System.Windows.Forms.NumericUpDown numericUpDown_DeviceID;
 	}
 }
 

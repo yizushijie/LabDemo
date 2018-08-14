@@ -302,14 +302,30 @@ namespace COMMPortLib
             }
         }
 
-        #endregion
+		/// <summary>
+		/// 
+		/// </summary>
+		public override int m_DeviceIDIndex
+		{
+			get
+			{
+				return base.m_DeviceIDIndex;
+			}
 
-        #region 构造函数
+			set
+			{
+				base.m_DeviceIDIndex = value;
+			}
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public SerialCOMMPort() : base()
+		#endregion
+
+		#region 构造函数
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public SerialCOMMPort() : base()
 		{
 
 		}
@@ -343,6 +359,10 @@ namespace COMMPortLib
             this.m_COMMPortForm = usedForm;
             //---设置多设备通信的设备ID地址
             this.m_DeviceID = deviceID;
+	        if (this.m_DeviceID>0)
+	        {
+		        this.m_DeviceIDIndex = 1;
+	        }
         }
 
         /// <summary>
@@ -1082,7 +1102,7 @@ namespace COMMPortLib
 				}
 
 				i = 0;
-				for (i = 0; i < length; i++)
+				for (i = 0; i < cmd.Length; i++)
 				{
 					this.m_COMMPortSendBytes.dateBytes.Add(cmd[i]);
 				}
@@ -1472,6 +1492,41 @@ namespace COMMPortLib
 				return this.IsAttached(name);
 			}
 			return false;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="isOk"></param>
+		/// <returns></returns>
+		public override bool IsReadValidData(int isOk)
+		{
+			if ((isOk!=0)||(this.m_COMMPortReceBytes.dateBytes==null)||(this.m_COMMPortReceBytes.dateBytes.Count<2))
+			{
+				return false;
+			}
+
+			if (this.m_DeviceID!=0x00)
+			{
+				int deviceID = 0;
+				//---判断要发送数据的长度
+				if (this.m_COMMPortReceBytes.dateBytes.Count > 250)
+				{
+					deviceID = this.m_COMMPortSendBytes.dateBytes[3];
+				}
+				else
+				{
+					deviceID = this.m_COMMPortSendBytes.dateBytes[2];
+				}
+
+				if (this.m_DeviceID!=deviceID)
+				{
+					return false;
+				}
+			}
+
+			return true;
+
 		}
 
 		#endregion

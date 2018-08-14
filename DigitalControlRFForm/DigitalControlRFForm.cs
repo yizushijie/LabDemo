@@ -111,7 +111,7 @@ namespace DigitalControlRFForm
 			//this.MaximumSize = this.Size;
 			if (this.usedDigitalControlRF==null)
 			{
-				this.usedDigitalControlRF=new DigitalControlRF(this,new SerialCOMMPort(this),this.comboBox_PortName,this.richTextBox_Msg);
+				this.usedDigitalControlRF=new DigitalControlRF(this,new SerialCOMMPort(this,(int)this.numericUpDown_DeviceID.Value),this.comboBox_PortName,this.richTextBox_Msg);
 			}
 			//---事件注册
 			this.RegistrationEvent();
@@ -250,9 +250,14 @@ namespace DigitalControlRFForm
 					if (this.usedDigitalControlRF!=null)
 					{
 						this.usedDigitalControlRF.OpenDevice(this.comboBox_PortName.Text, this.richTextBox_Msg);
+						if ((this.usedDigitalControlRF!=null)&&(this.usedDigitalControlRF.m_UsedPort!=null)&&(this.usedDigitalControlRF.m_UsedPort.m_DeviceID!=(int)this.numericUpDown_DeviceID.Value))
+						{
+							this.usedDigitalControlRF.m_UsedPort.m_DeviceID = (int) this.numericUpDown_DeviceID.Value;
+						}
 						this.groupBox_RFConfig.Enabled = true;
 						this.button_CloseDevice.Enabled = true;
 						this.panel_ReadPower.Enabled = true;
+						this.numericUpDown_DeviceID.Enabled = false;
 						return;
 					}
 					break;
@@ -262,6 +267,8 @@ namespace DigitalControlRFForm
 						this.usedDigitalControlRF.CloseDevice(this.comboBox_PortName.Text, this.richTextBox_Msg);
 						this.groupBox_RFConfig.Enabled = false;
 						this.button_OpenDevice.Enabled = true;
+						this.numericUpDown_DeviceID.Enabled = true;
+						this.panel_ReadPower.Enabled = false;
 						return;
 					}
 					break;
