@@ -2,13 +2,6 @@
 using MessageBoxPlusLib;
 using ProcessApplicationLib;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabDemoForm
@@ -25,7 +18,7 @@ namespace LabDemoForm
 			InitializeComponent();
 		}
 
-		#endregion
+		#endregion 构造函数
 
 		#region 析构函数
 
@@ -38,7 +31,7 @@ namespace LabDemoForm
 			this.Dispose();
 		}
 
-		#endregion
+		#endregion 析构函数
 
 		#region 窗体初始化函数
 
@@ -78,7 +71,7 @@ namespace LabDemoForm
 				}
 			}
 			//---判断是用户关闭
-			else if (e.CloseReason== CloseReason.UserClosing)
+			else if (e.CloseReason == CloseReason.UserClosing)
 			{
 				if (DialogResult.OK == MessageBoxPlus.Show(this, "你确定要关闭应用程序吗？", "关闭提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
 				{
@@ -96,7 +89,7 @@ namespace LabDemoForm
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// 窗体位置发生变化
 		/// </summary>
@@ -107,8 +100,7 @@ namespace LabDemoForm
 			this.StartPosition = FormStartPosition.CenterScreen;
 		}
 
-		#endregion
-
+		#endregion 窗体初始化函数
 
 		#region 初始化函数
 
@@ -120,7 +112,7 @@ namespace LabDemoForm
 			this.RegistrationEvent();
 		}
 
-		#endregion
+		#endregion 初始化函数
 
 		#region 事件函数
 
@@ -140,7 +132,6 @@ namespace LabDemoForm
 		/// </summary>
 		private void UnRegistrationEvent()
 		{
-
 		}
 
 		/// <summary>
@@ -178,13 +169,14 @@ namespace LabDemoForm
 				case "ToolStripMenuItem_GenRF":
 					this.DigitalControlRFMenuForm_Init();
 					break;
+
 				default:
 					break;
 			}
 			tsm.Enabled = true;
 		}
 
-		#endregion
+		#endregion 事件函数
 
 		#region 函数定义
 
@@ -233,7 +225,6 @@ namespace LabDemoForm
 			//newForm.Focus();
 		}
 
-		#endregion
-		
+		#endregion 函数定义
 	}
 }

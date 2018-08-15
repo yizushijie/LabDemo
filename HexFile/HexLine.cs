@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace HexFileLib
@@ -9,18 +6,21 @@ namespace HexFileLib
 	/// <summary>
 	/// Hex文件的行信息的解析
 	/// </summary>
+
 	#region hex文件类型
+
 	public enum HexType : byte
 	{
-		DATA_RECORD						= 0,                    //用来记录数据，HEX文件的大部分记录都是数据记录
-		END_OF_FILE_RECORD				= 1,                 //用来标识文件结束，放在文件的最后，标识HEX文件的结尾
-		EXTEND_SEGMENT_ADDRESS_RECORD	= 2,                  //用来标识扩展段地址的记录
-		START_SEGMENT_ADDRESS_RECORD	= 3,                   //开始段地址记录
-		EXTEND_LINEAR_ADDRESS_RECORD	= 4,                   //用来标识扩展线性地址的记录
-		START_LINEAR_ADDRESS_RECORD		= 5,                    //开始线性地址记录
+		DATA_RECORD = 0,                    //用来记录数据，HEX文件的大部分记录都是数据记录
+		END_OF_FILE_RECORD = 1,                 //用来标识文件结束，放在文件的最后，标识HEX文件的结尾
+		EXTEND_SEGMENT_ADDRESS_RECORD = 2,                  //用来标识扩展段地址的记录
+		START_SEGMENT_ADDRESS_RECORD = 3,                   //开始段地址记录
+		EXTEND_LINEAR_ADDRESS_RECORD = 4,                   //用来标识扩展线性地址的记录
+		START_LINEAR_ADDRESS_RECORD = 5,                    //开始线性地址记录
 	}
 
-	#endregion
+	#endregion hex文件类型
+
 	/// <summary>
 	/// Hex的数据行处理
 	/// </summary>
@@ -63,7 +63,7 @@ namespace HexFileLib
 		/// </summary>
 		protected string _errMsg = "";
 
-		#endregion
+		#endregion 变量定义
 
 		#region 属性定义
 
@@ -144,16 +144,17 @@ namespace HexFileLib
 			}
 		}
 
-		#endregion
+		#endregion 属性定义
 
 		#region 构造函数
+
 		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public HexLine()
 		{
-
 		}
+
 		/// <summary>
 		/// 构造函数
 		/// </summary>
@@ -163,9 +164,10 @@ namespace HexFileLib
 			this._available = this.GetHexLine(fileLine);
 		}
 
-		#endregion
+		#endregion 构造函数
 
 		#region 函数定义
+
 		/// <summary>
 		/// 解析Hex文件数据行
 		/// </summary>
@@ -242,7 +244,7 @@ namespace HexFileLib
 			//---申请存储数据的空间
 			this._hexByte = new byte[this._length];
 			int i = 0;
-			for ( i = 0; i < this._length; i++)
+			for (i = 0; i < this._length; i++)
 			{
 				try
 				{
@@ -251,7 +253,6 @@ namespace HexFileLib
 				}
 				catch
 				{
-
 					this._errMsg = "数据记录行的数据信息错误";
 					return false;
 				}
@@ -268,7 +269,7 @@ namespace HexFileLib
 				this._errMsg = "数据记录行的校验信息错误";
 				return false;
 			}
-			
+
 			//---计算校验和
 			this._crcVal = (byte)(0x100 - this._crcVal);
 			//---校验和比对
@@ -287,6 +288,7 @@ namespace HexFileLib
 						return false;
 					}
 					break;
+
 				case HexType.END_OF_FILE_RECORD:
 					if (this._length != 0)
 					{
@@ -294,6 +296,7 @@ namespace HexFileLib
 						return false;
 					}
 					break;
+
 				case HexType.EXTEND_SEGMENT_ADDRESS_RECORD:
 					if (this._length != 2)
 					{
@@ -301,6 +304,7 @@ namespace HexFileLib
 						return false;
 					}
 					break;
+
 				case HexType.START_SEGMENT_ADDRESS_RECORD:
 					if (this._length != 4)
 					{
@@ -308,6 +312,7 @@ namespace HexFileLib
 						return false;
 					}
 					break;
+
 				case HexType.EXTEND_LINEAR_ADDRESS_RECORD:
 					if (this._length != 2)
 					{
@@ -315,6 +320,7 @@ namespace HexFileLib
 						return false;
 					}
 					break;
+
 				case HexType.START_LINEAR_ADDRESS_RECORD:
 					if (this._length != 4)
 					{
@@ -322,6 +328,7 @@ namespace HexFileLib
 						return false;
 					}
 					break;
+
 				default:
 					this._errMsg = "不能识别的数据文件!";
 					return false;
@@ -336,7 +343,7 @@ namespace HexFileLib
 		/// <returns></returns>
 		public static bool IsHexNumber(string hexString)
 		{
-			if ((hexString == string.Empty)||(hexString==null))
+			if ((hexString == string.Empty) || (hexString == null))
 			{
 				return false;
 			}
@@ -356,7 +363,7 @@ namespace HexFileLib
 		/// <param name="type"></param>
 		/// <param name="buffer"></param>
 		/// <returns></returns>
-		public static string ToHexLine(long addr,HexType type, byte[] buffer)
+		public static string ToHexLine(long addr, HexType type, byte[] buffer)
 		{
 			string _return = ":";
 			byte crc = (byte)(buffer.Length);
@@ -422,7 +429,7 @@ namespace HexFileLib
 		/// <returns></returns>
 		public static string ToHexLineDataRecord(long addr, byte[] buffer)
 		{
-			return HexLine.ToHexLine(addr,HexType.DATA_RECORD, buffer);
+			return HexLine.ToHexLine(addr, HexType.DATA_RECORD, buffer);
 		}
 
 		/// <summary>
@@ -443,7 +450,7 @@ namespace HexFileLib
 		{
 			string _return = "";
 			byte[] line = new byte[2] { (byte)((addr >> 8) & 0xFF), (byte)(addr & 0xFF) };
-			_return = HexLine.ToHexLine(0,HexType.EXTEND_SEGMENT_ADDRESS_RECORD, line);
+			_return = HexLine.ToHexLine(0, HexType.EXTEND_SEGMENT_ADDRESS_RECORD, line);
 			return _return;
 		}
 
@@ -458,12 +465,11 @@ namespace HexFileLib
 
 			byte[] line = new byte[2] { (byte)((addr >> 8) & 0xFF), (byte)(addr & 0xFF) };
 
-			_return = HexLine.ToHexLine(0,HexType.EXTEND_LINEAR_ADDRESS_RECORD, line);
+			_return = HexLine.ToHexLine(0, HexType.EXTEND_LINEAR_ADDRESS_RECORD, line);
 
 			return _return;
 		}
 
-		#endregion
-
+		#endregion 函数定义
 	}
 }

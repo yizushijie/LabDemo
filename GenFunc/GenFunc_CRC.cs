@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GenFuncLib
 {
-    public partial class GenFunc
-    {
-
+	public partial class GenFunc
+	{
 		#region CRC32
 
 		/// <summary>
@@ -50,9 +45,8 @@ namespace GenFuncLib
 			0xAFB010B1,0xAB710D06,0xA6322BDF,0xA2F33668,0xBCB4666D,0xB8757BDA,0xB5365D03,0xB1F740B4
 		};
 
-
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
@@ -82,7 +76,7 @@ namespace GenFuncLib
 		}
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
@@ -111,14 +105,14 @@ namespace GenFuncLib
 			return nReg;
 		}
 
-		#endregion
+		#endregion CRC32
 
 		#region CRC16
 
 		/// <summary>
 		/// CRC16表
 		/// </summary>
-	    private static UInt16[] crc16Table = new UInt16[256]
+		private static UInt16[] crc16Table = new UInt16[256]
 		{
 			0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7,
 			0x8108, 0x9129, 0xa14a, 0xb16b, 0xc18c, 0xd1ad, 0xe1ce, 0xf1ef,
@@ -155,7 +149,7 @@ namespace GenFuncLib
 		};
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
@@ -174,7 +168,7 @@ namespace GenFuncLib
 		}
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
@@ -192,14 +186,14 @@ namespace GenFuncLib
 			return (UInt16)nReg;
 		}
 
-		#endregion
+		#endregion CRC16
 
 		#region CRC8
-		
+
 		/// <summary>
 		/// CRC8表
 		/// </summary>
-		public static byte[] crc8Table =new byte[256]
+		public static byte[] crc8Table = new byte[256]
 		{
 			0x00,0x07,0x0E,0x09,0x1C,0x1B,0x12,0x15,0x38,0x3F,0x36,0x31,0x24,0x23,0x2A,0x2D,
 			0x70,0x77,0x7E,0x79,0x6C,0x6B,0x62,0x65,0x48,0x4F,0x46,0x41,0x54,0x53,0x5A,0x5D,
@@ -220,7 +214,7 @@ namespace GenFuncLib
 		};
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
@@ -232,18 +226,18 @@ namespace GenFuncLib
 			UInt32 index = 0;
 			for (index = 0; index < length; index++)
 			{
-				nTemp =(byte)(nReg ^ cmd[index]);
+				nTemp = (byte)(nReg ^ cmd[index]);
 				nReg = GenFunc.crc8Table[nTemp];
 			}
 			return (byte)nReg;
 		}
 
-		#endregion
+		#endregion CRC8
 
 		#region 校验和
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
@@ -261,7 +255,6 @@ namespace GenFuncLib
 			return _return;
 		}
 
-		#endregion
-
+		#endregion 校验和
 	}
 }

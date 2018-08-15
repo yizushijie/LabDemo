@@ -1,36 +1,33 @@
-﻿
-using COMMPortLib;
+﻿using COMMPortLib;
 using System;
-using System.Drawing;
-using System.Management;
-using System.Threading;
 using System.Windows.Forms;
+
 namespace TestDemo
 {
-    public partial class Form1 : Form
-    {
-	    private COMMPort _usedPort = null;
+	public partial class Form1 : Form
+	{
+		private COMMPort _usedPort = null;
 
 		private bool exitTest = false;
 
 		private long count = 0;
 
-        public Form1()
-        {
-            InitializeComponent();
-        }
+		public Form1()
+		{
+			InitializeComponent();
+		}
 
 		protected override void WndProc(ref Message m)
 		{
-			if (this._usedPort!=null)
+			if (this._usedPort != null)
 			{
-				this._usedPort.DevicesChangedEvent(ref m,this.comboBox1,this.richTextBox1);
+				this._usedPort.DevicesChangedEvent(ref m, this.comboBox1, this.richTextBox1);
 			}
 			base.WndProc(ref m);
 		}
 
 		private void timer_Tick_Tick(object sender, EventArgs e)
-        {
+		{
 			/*
             int  _return= this._usedPort.Init(this.comboBox1);
             if (_return>0)
@@ -38,20 +35,19 @@ namespace TestDemo
                 RichTextBoxPlus.AppendTextInfoTopWithoutDateTime(this.richTextBox1, this._usedPort.m_ErrMsg,Color.Black,false);
             }
 			*/
-        }
+		}
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            this._usedPort = new SerialCOMMPort(this);
-	        this._usedPort.Init(this.comboBox1, this.richTextBox1);
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			this._usedPort = new SerialCOMMPort(this);
+			this._usedPort.Init(this.comboBox1, this.richTextBox1);
 			this.Focus();
 		}
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			
 		}
-		
+
 		private void button_Open_Click(object sender, EventArgs e)
 		{
 			if ((this.comboBox1.Text != string.Empty) && (this.comboBox1.Text != null) && (this.comboBox1.Text != "") && (this._usedPort != null))
@@ -86,10 +82,8 @@ namespace TestDemo
 
 		private void button_T2_Click(object sender, EventArgs e)
 		{
-
 		}
 
-		
 		private void button_Log_Click(object sender, EventArgs e)
 		{
 			/*
@@ -141,12 +135,12 @@ namespace TestDemo
 			}
 			*/
 		}
-		
 
 		private void button_Exit_Click(object sender, EventArgs e)
 		{
 			this.exitTest = true;
 		}
+
 		private void button_Log2_Click(object sender, EventArgs e)
 		{
 			//while (true)
@@ -199,6 +193,7 @@ namespace TestDemo
 			//	Application.DoEvents();
 			//}
 		}
+
 		private void button_Log3_Click(object sender, EventArgs e)
 		{
 			//while (true)
@@ -479,9 +474,6 @@ namespace TestDemo
 			//		this._usedPort.m_comportreceeventisfinished = false;
 			//	}
 			//}
-			
 		}
-
-		
 	}
 }

@@ -30,6 +30,8 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.panel_PortName = new System.Windows.Forms.Panel();
+			this.label_PowerDeviceID = new System.Windows.Forms.Label();
+			this.numericUpDown_PowerDeviceID = new System.Windows.Forms.NumericUpDown();
 			this.button_CloseDevice = new System.Windows.Forms.Button();
 			this.button_OpenDevice = new System.Windows.Forms.Button();
 			this.label_PortName = new System.Windows.Forms.Label();
@@ -143,9 +145,24 @@
 			this.label_RFChannel = new System.Windows.Forms.Label();
 			this.comboBox_RFGenSignal = new System.Windows.Forms.ComboBox();
 			this.label_RFGenSignal = new System.Windows.Forms.Label();
-			this.numericUpDown_DeviceID = new System.Windows.Forms.NumericUpDown();
-			this.label_DeviceID = new System.Windows.Forms.Label();
+			this.label_CodeDeviceID = new System.Windows.Forms.Label();
+			this.numericUpDown_CodeDeviceID = new System.Windows.Forms.NumericUpDown();
+			this.groupBox_CodeConfig = new System.Windows.Forms.GroupBox();
+			this.groupBox_433MSCode = new System.Windows.Forms.GroupBox();
+			this.button_Close433MSCode = new System.Windows.Forms.Button();
+			this.button_Open433MSCode = new System.Windows.Forms.Button();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.groupBox_315MCode = new System.Windows.Forms.GroupBox();
+			this.button_Open315MCode = new System.Windows.Forms.Button();
+			this.button_Close315MCode = new System.Windows.Forms.Button();
+			this.groupBox_207MCode = new System.Windows.Forms.GroupBox();
+			this.button_Open207MCode = new System.Windows.Forms.Button();
+			this.button_Close207MCode = new System.Windows.Forms.Button();
+			this.groupBox_433MBCode = new System.Windows.Forms.GroupBox();
+			this.button_Open433MBCode = new System.Windows.Forms.Button();
+			this.button_Close433MBCode = new System.Windows.Forms.Button();
 			this.panel_PortName.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_PowerDeviceID)).BeginInit();
 			this.groupBox_BasicConfig.SuspendLayout();
 			this.panel_433MSRF.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_433MSRFPower)).BeginInit();
@@ -182,13 +199,21 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_315MRFPower)).BeginInit();
 			this.panel_ReadPower.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_RFPower)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_DeviceID)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_CodeDeviceID)).BeginInit();
+			this.groupBox_CodeConfig.SuspendLayout();
+			this.groupBox_433MSCode.SuspendLayout();
+			this.panel1.SuspendLayout();
+			this.groupBox_315MCode.SuspendLayout();
+			this.groupBox_207MCode.SuspendLayout();
+			this.groupBox_433MBCode.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel_PortName
 			// 
-			this.panel_PortName.Controls.Add(this.label_DeviceID);
-			this.panel_PortName.Controls.Add(this.numericUpDown_DeviceID);
+			this.panel_PortName.Controls.Add(this.numericUpDown_CodeDeviceID);
+			this.panel_PortName.Controls.Add(this.label_CodeDeviceID);
+			this.panel_PortName.Controls.Add(this.label_PowerDeviceID);
+			this.panel_PortName.Controls.Add(this.numericUpDown_PowerDeviceID);
 			this.panel_PortName.Controls.Add(this.button_CloseDevice);
 			this.panel_PortName.Controls.Add(this.button_OpenDevice);
 			this.panel_PortName.Controls.Add(this.label_PortName);
@@ -197,8 +222,35 @@
 			this.panel_PortName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
 			this.panel_PortName.Location = new System.Drawing.Point(3, 17);
 			this.panel_PortName.Name = "panel_PortName";
-			this.panel_PortName.Size = new System.Drawing.Size(380, 38);
+			this.panel_PortName.Size = new System.Drawing.Size(558, 38);
 			this.panel_PortName.TabIndex = 0;
+			// 
+			// label_PowerDeviceID
+			// 
+			this.label_PowerDeviceID.AutoSize = true;
+			this.label_PowerDeviceID.Location = new System.Drawing.Point(257, 13);
+			this.label_PowerDeviceID.Name = "label_PowerDeviceID";
+			this.label_PowerDeviceID.Size = new System.Drawing.Size(71, 12);
+			this.label_PowerDeviceID.TabIndex = 2;
+			this.label_PowerDeviceID.Text = "功率设备ID:";
+			// 
+			// numericUpDown_PowerDeviceID
+			// 
+			this.numericUpDown_PowerDeviceID.Location = new System.Drawing.Point(334, 9);
+			this.numericUpDown_PowerDeviceID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.numericUpDown_PowerDeviceID.Name = "numericUpDown_PowerDeviceID";
+			this.numericUpDown_PowerDeviceID.Size = new System.Drawing.Size(63, 21);
+			this.numericUpDown_PowerDeviceID.TabIndex = 3;
+			this.numericUpDown_PowerDeviceID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.numericUpDown_PowerDeviceID.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// button_CloseDevice
 			// 
@@ -250,9 +302,9 @@
 			this.richTextBox_Msg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.richTextBox_Msg.ContextMenuStrip = this.contextMenuStrip_richTextBox_Msg;
 			this.richTextBox_Msg.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.richTextBox_Msg.Location = new System.Drawing.Point(0, 433);
+			this.richTextBox_Msg.Location = new System.Drawing.Point(0, 494);
 			this.richTextBox_Msg.Name = "richTextBox_Msg";
-			this.richTextBox_Msg.Size = new System.Drawing.Size(804, 192);
+			this.richTextBox_Msg.Size = new System.Drawing.Size(804, 234);
 			this.richTextBox_Msg.TabIndex = 4;
 			this.richTextBox_Msg.Text = "";
 			// 
@@ -416,9 +468,8 @@
 			// 
 			// groupBox_RFConfig
 			// 
-			this.groupBox_RFConfig.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox_RFConfig.Controls.Add(this.panel_RFH);
+			this.groupBox_RFConfig.Controls.Add(this.panel_ReadPower);
 			this.groupBox_RFConfig.Controls.Add(this.panel_RFG);
 			this.groupBox_RFConfig.Controls.Add(this.panel_RFF);
 			this.groupBox_RFConfig.Controls.Add(this.panel_RFE);
@@ -1042,7 +1093,7 @@
 			this.panel_RF433MB.Controls.Add(this.numericUpDown_RF433MB);
 			this.panel_RF433MB.Controls.Add(this.label_RF433MB);
 			this.panel_RF433MB.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel_RF433MB.Location = new System.Drawing.Point(281, 257);
+			this.panel_RF433MB.Location = new System.Drawing.Point(280, 222);
 			this.panel_RF433MB.Name = "panel_RF433MB";
 			this.panel_RF433MB.Size = new System.Drawing.Size(259, 40);
 			this.panel_RF433MB.TabIndex = 8;
@@ -1116,7 +1167,7 @@
 			this.panel_RF207M.Controls.Add(this.numericUpDown_RF207M);
 			this.panel_RF207M.Controls.Add(this.label_RF207M);
 			this.panel_RF207M.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel_RF207M.Location = new System.Drawing.Point(281, 177);
+			this.panel_RF207M.Location = new System.Drawing.Point(280, 159);
 			this.panel_RF207M.Name = "panel_RF207M";
 			this.panel_RF207M.Size = new System.Drawing.Size(259, 40);
 			this.panel_RF207M.TabIndex = 7;
@@ -1190,7 +1241,7 @@
 			this.panel_RF315M.Controls.Add(this.numericUpDown_RF315M);
 			this.panel_RF315M.Controls.Add(this.label_RF315M);
 			this.panel_RF315M.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel_RF315M.Location = new System.Drawing.Point(281, 105);
+			this.panel_RF315M.Location = new System.Drawing.Point(280, 97);
 			this.panel_RF315M.Name = "panel_RF315M";
 			this.panel_RF315M.Size = new System.Drawing.Size(259, 40);
 			this.panel_RF315M.TabIndex = 6;
@@ -1264,7 +1315,7 @@
 			this.panel_433MBRF.Controls.Add(this.numericUpDown_433MBRFPower);
 			this.panel_433MBRF.Controls.Add(this.label_433MBRFPower);
 			this.panel_433MBRF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel_433MBRF.Location = new System.Drawing.Point(3, 257);
+			this.panel_433MBRF.Location = new System.Drawing.Point(3, 222);
 			this.panel_433MBRF.Name = "panel_433MBRF";
 			this.panel_433MBRF.Size = new System.Drawing.Size(275, 40);
 			this.panel_433MBRF.TabIndex = 4;
@@ -1338,7 +1389,7 @@
 			this.panel_207MRF.Controls.Add(this.numericUpDown_207MRFPower);
 			this.panel_207MRF.Controls.Add(this.label_207MRFPower);
 			this.panel_207MRF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel_207MRF.Location = new System.Drawing.Point(3, 177);
+			this.panel_207MRF.Location = new System.Drawing.Point(3, 159);
 			this.panel_207MRF.Name = "panel_207MRF";
 			this.panel_207MRF.Size = new System.Drawing.Size(275, 40);
 			this.panel_207MRF.TabIndex = 3;
@@ -1412,7 +1463,7 @@
 			this.panel_315MRF.Controls.Add(this.numericUpDown_315MRFPower);
 			this.panel_315MRF.Controls.Add(this.label_315MRFPower);
 			this.panel_315MRF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel_315MRF.Location = new System.Drawing.Point(3, 105);
+			this.panel_315MRF.Location = new System.Drawing.Point(3, 97);
 			this.panel_315MRF.Name = "panel_315MRF";
 			this.panel_315MRF.Size = new System.Drawing.Size(275, 40);
 			this.panel_315MRF.TabIndex = 2;
@@ -1494,15 +1545,15 @@
 			this.panel_ReadPower.Controls.Add(this.comboBox_RFGenSignal);
 			this.panel_ReadPower.Controls.Add(this.label_RFGenSignal);
 			this.panel_ReadPower.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.panel_ReadPower.Location = new System.Drawing.Point(3, 387);
+			this.panel_ReadPower.Location = new System.Drawing.Point(3, 283);
 			this.panel_ReadPower.Name = "panel_ReadPower";
-			this.panel_ReadPower.Size = new System.Drawing.Size(797, 40);
+			this.panel_ReadPower.Size = new System.Drawing.Size(537, 40);
 			this.panel_ReadPower.TabIndex = 9;
 			// 
 			// label_RFUnite
 			// 
 			this.label_RFUnite.AutoSize = true;
-			this.label_RFUnite.Location = new System.Drawing.Point(454, 14);
+			this.label_RFUnite.Location = new System.Drawing.Point(437, 14);
 			this.label_RFUnite.Name = "label_RFUnite";
 			this.label_RFUnite.Size = new System.Drawing.Size(23, 12);
 			this.label_RFUnite.TabIndex = 8;
@@ -1516,7 +1567,7 @@
             0,
             0,
             65536});
-			this.numericUpDown_RFPower.Location = new System.Drawing.Point(385, 10);
+			this.numericUpDown_RFPower.Location = new System.Drawing.Point(368, 10);
 			this.numericUpDown_RFPower.Maximum = new decimal(new int[] {
             20,
             0,
@@ -1535,7 +1586,7 @@
 			// label_RFPower
 			// 
 			this.label_RFPower.AutoSize = true;
-			this.label_RFPower.Location = new System.Drawing.Point(326, 14);
+			this.label_RFPower.Location = new System.Drawing.Point(309, 14);
 			this.label_RFPower.Name = "label_RFPower";
 			this.label_RFPower.Size = new System.Drawing.Size(53, 12);
 			this.label_RFPower.TabIndex = 6;
@@ -1543,7 +1594,7 @@
 			// 
 			// button_ReadPower
 			// 
-			this.button_ReadPower.Location = new System.Drawing.Point(499, 11);
+			this.button_ReadPower.Location = new System.Drawing.Point(466, 9);
 			this.button_ReadPower.Name = "button_ReadPower";
 			this.button_ReadPower.Size = new System.Drawing.Size(48, 23);
 			this.button_ReadPower.TabIndex = 5;
@@ -1600,39 +1651,191 @@
 			this.label_RFGenSignal.TabIndex = 1;
 			this.label_RFGenSignal.Text = "信号源：";
 			// 
-			// numericUpDown_DeviceID
+			// label_CodeDeviceID
 			// 
-			this.numericUpDown_DeviceID.Location = new System.Drawing.Point(310, 9);
-			this.numericUpDown_DeviceID.Maximum = new decimal(new int[] {
+			this.label_CodeDeviceID.AutoSize = true;
+			this.label_CodeDeviceID.Location = new System.Drawing.Point(407, 13);
+			this.label_CodeDeviceID.Name = "label_CodeDeviceID";
+			this.label_CodeDeviceID.Size = new System.Drawing.Size(71, 12);
+			this.label_CodeDeviceID.TabIndex = 4;
+			this.label_CodeDeviceID.Text = "编码设备ID:";
+			// 
+			// numericUpDown_CodeDeviceID
+			// 
+			this.numericUpDown_CodeDeviceID.Location = new System.Drawing.Point(481, 8);
+			this.numericUpDown_CodeDeviceID.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-			this.numericUpDown_DeviceID.Name = "numericUpDown_DeviceID";
-			this.numericUpDown_DeviceID.Size = new System.Drawing.Size(63, 21);
-			this.numericUpDown_DeviceID.TabIndex = 3;
-			this.numericUpDown_DeviceID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.numericUpDown_DeviceID.Value = new decimal(new int[] {
-            1,
+			this.numericUpDown_CodeDeviceID.Name = "numericUpDown_CodeDeviceID";
+			this.numericUpDown_CodeDeviceID.Size = new System.Drawing.Size(63, 21);
+			this.numericUpDown_CodeDeviceID.TabIndex = 5;
+			this.numericUpDown_CodeDeviceID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.numericUpDown_CodeDeviceID.Value = new decimal(new int[] {
+            2,
             0,
             0,
             0});
 			// 
-			// label_DeviceID
+			// groupBox_CodeConfig
 			// 
-			this.label_DeviceID.AutoSize = true;
-			this.label_DeviceID.Location = new System.Drawing.Point(257, 13);
-			this.label_DeviceID.Name = "label_DeviceID";
-			this.label_DeviceID.Size = new System.Drawing.Size(47, 12);
-			this.label_DeviceID.TabIndex = 2;
-			this.label_DeviceID.Text = "设备ID:";
+			this.groupBox_CodeConfig.Controls.Add(this.panel1);
+			this.groupBox_CodeConfig.Location = new System.Drawing.Point(3, 393);
+			this.groupBox_CodeConfig.Name = "groupBox_CodeConfig";
+			this.groupBox_CodeConfig.Size = new System.Drawing.Size(801, 99);
+			this.groupBox_CodeConfig.TabIndex = 5;
+			this.groupBox_CodeConfig.TabStop = false;
+			this.groupBox_CodeConfig.Text = "编号信号配置";
+			// 
+			// groupBox_433MSCode
+			// 
+			this.groupBox_433MSCode.Controls.Add(this.button_Open433MSCode);
+			this.groupBox_433MSCode.Controls.Add(this.button_Close433MSCode);
+			this.groupBox_433MSCode.Dock = System.Windows.Forms.DockStyle.Left;
+			this.groupBox_433MSCode.Location = new System.Drawing.Point(0, 0);
+			this.groupBox_433MSCode.Name = "groupBox_433MSCode";
+			this.groupBox_433MSCode.Size = new System.Drawing.Size(74, 76);
+			this.groupBox_433MSCode.TabIndex = 0;
+			this.groupBox_433MSCode.TabStop = false;
+			this.groupBox_433MSCode.Text = "433M小信号源编码";
+			// 
+			// button_Close433MSCode
+			// 
+			this.button_Close433MSCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Close433MSCode.Location = new System.Drawing.Point(3, 50);
+			this.button_Close433MSCode.Name = "button_Close433MSCode";
+			this.button_Close433MSCode.Size = new System.Drawing.Size(68, 23);
+			this.button_Close433MSCode.TabIndex = 0;
+			this.button_Close433MSCode.Text = "关闭";
+			this.button_Close433MSCode.UseVisualStyleBackColor = true;
+			// 
+			// button_Open433MSCode
+			// 
+			this.button_Open433MSCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Open433MSCode.Location = new System.Drawing.Point(3, 27);
+			this.button_Open433MSCode.Name = "button_Open433MSCode";
+			this.button_Open433MSCode.Size = new System.Drawing.Size(68, 23);
+			this.button_Open433MSCode.TabIndex = 1;
+			this.button_Open433MSCode.Text = "打开";
+			this.button_Open433MSCode.UseVisualStyleBackColor = true;
+			// 
+			// panel1
+			// 
+			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel1.Controls.Add(this.groupBox_433MBCode);
+			this.panel1.Controls.Add(this.groupBox_207MCode);
+			this.panel1.Controls.Add(this.groupBox_315MCode);
+			this.panel1.Controls.Add(this.groupBox_433MSCode);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.panel1.Location = new System.Drawing.Point(3, 17);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(795, 78);
+			this.panel1.TabIndex = 4;
+			// 
+			// groupBox_315MCode
+			// 
+			this.groupBox_315MCode.Controls.Add(this.button_Open315MCode);
+			this.groupBox_315MCode.Controls.Add(this.button_Close315MCode);
+			this.groupBox_315MCode.Dock = System.Windows.Forms.DockStyle.Left;
+			this.groupBox_315MCode.Location = new System.Drawing.Point(74, 0);
+			this.groupBox_315MCode.Name = "groupBox_315MCode";
+			this.groupBox_315MCode.Size = new System.Drawing.Size(74, 76);
+			this.groupBox_315MCode.TabIndex = 1;
+			this.groupBox_315MCode.TabStop = false;
+			this.groupBox_315MCode.Text = "315M信号源编码";
+			// 
+			// button_Open315MCode
+			// 
+			this.button_Open315MCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Open315MCode.Location = new System.Drawing.Point(3, 27);
+			this.button_Open315MCode.Name = "button_Open315MCode";
+			this.button_Open315MCode.Size = new System.Drawing.Size(68, 23);
+			this.button_Open315MCode.TabIndex = 1;
+			this.button_Open315MCode.Text = "打开";
+			this.button_Open315MCode.UseVisualStyleBackColor = true;
+			// 
+			// button_Close315MCode
+			// 
+			this.button_Close315MCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Close315MCode.Location = new System.Drawing.Point(3, 50);
+			this.button_Close315MCode.Name = "button_Close315MCode";
+			this.button_Close315MCode.Size = new System.Drawing.Size(68, 23);
+			this.button_Close315MCode.TabIndex = 0;
+			this.button_Close315MCode.Text = "关闭";
+			this.button_Close315MCode.UseVisualStyleBackColor = true;
+			// 
+			// groupBox_207MCode
+			// 
+			this.groupBox_207MCode.Controls.Add(this.button_Open207MCode);
+			this.groupBox_207MCode.Controls.Add(this.button_Close207MCode);
+			this.groupBox_207MCode.Dock = System.Windows.Forms.DockStyle.Left;
+			this.groupBox_207MCode.Location = new System.Drawing.Point(148, 0);
+			this.groupBox_207MCode.Name = "groupBox_207MCode";
+			this.groupBox_207MCode.Size = new System.Drawing.Size(74, 76);
+			this.groupBox_207MCode.TabIndex = 2;
+			this.groupBox_207MCode.TabStop = false;
+			this.groupBox_207MCode.Text = "207M信号源编码";
+			// 
+			// button_Open207MCode
+			// 
+			this.button_Open207MCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Open207MCode.Location = new System.Drawing.Point(3, 27);
+			this.button_Open207MCode.Name = "button_Open207MCode";
+			this.button_Open207MCode.Size = new System.Drawing.Size(68, 23);
+			this.button_Open207MCode.TabIndex = 1;
+			this.button_Open207MCode.Text = "打开";
+			this.button_Open207MCode.UseVisualStyleBackColor = true;
+			// 
+			// button_Close207MCode
+			// 
+			this.button_Close207MCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Close207MCode.Location = new System.Drawing.Point(3, 50);
+			this.button_Close207MCode.Name = "button_Close207MCode";
+			this.button_Close207MCode.Size = new System.Drawing.Size(68, 23);
+			this.button_Close207MCode.TabIndex = 0;
+			this.button_Close207MCode.Text = "关闭";
+			this.button_Close207MCode.UseVisualStyleBackColor = true;
+			// 
+			// groupBox_433MBCode
+			// 
+			this.groupBox_433MBCode.Controls.Add(this.button_Open433MBCode);
+			this.groupBox_433MBCode.Controls.Add(this.button_Close433MBCode);
+			this.groupBox_433MBCode.Dock = System.Windows.Forms.DockStyle.Left;
+			this.groupBox_433MBCode.Location = new System.Drawing.Point(222, 0);
+			this.groupBox_433MBCode.Name = "groupBox_433MBCode";
+			this.groupBox_433MBCode.Size = new System.Drawing.Size(75, 76);
+			this.groupBox_433MBCode.TabIndex = 3;
+			this.groupBox_433MBCode.TabStop = false;
+			this.groupBox_433MBCode.Text = "433M大信号源编码";
+			// 
+			// button_Open433MBCode
+			// 
+			this.button_Open433MBCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Open433MBCode.Location = new System.Drawing.Point(3, 27);
+			this.button_Open433MBCode.Name = "button_Open433MBCode";
+			this.button_Open433MBCode.Size = new System.Drawing.Size(69, 23);
+			this.button_Open433MBCode.TabIndex = 1;
+			this.button_Open433MBCode.Text = "打开";
+			this.button_Open433MBCode.UseVisualStyleBackColor = true;
+			// 
+			// button_Close433MBCode
+			// 
+			this.button_Close433MBCode.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.button_Close433MBCode.Location = new System.Drawing.Point(3, 50);
+			this.button_Close433MBCode.Name = "button_Close433MBCode";
+			this.button_Close433MBCode.Size = new System.Drawing.Size(69, 23);
+			this.button_Close433MBCode.TabIndex = 0;
+			this.button_Close433MBCode.Text = "关闭";
+			this.button_Close433MBCode.UseVisualStyleBackColor = true;
 			// 
 			// DigitalControlRFMenuForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(804, 625);
-			this.Controls.Add(this.panel_ReadPower);
+			this.ClientSize = new System.Drawing.Size(804, 728);
+			this.Controls.Add(this.groupBox_CodeConfig);
 			this.Controls.Add(this.richTextBox_Msg);
 			this.Controls.Add(this.groupBox_BasicConfig);
 			this.Controls.Add(this.groupBox_RFConfig);
@@ -1644,6 +1847,7 @@
 			this.LocationChanged += new System.EventHandler(this.DigitalControlRFMenuForm_LocationChanged);
 			this.panel_PortName.ResumeLayout(false);
 			this.panel_PortName.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_PowerDeviceID)).EndInit();
 			this.groupBox_BasicConfig.ResumeLayout(false);
 			this.panel_433MSRF.ResumeLayout(false);
 			this.panel_433MSRF.PerformLayout();
@@ -1697,7 +1901,13 @@
 			this.panel_ReadPower.ResumeLayout(false);
 			this.panel_ReadPower.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_RFPower)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_DeviceID)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_CodeDeviceID)).EndInit();
+			this.groupBox_CodeConfig.ResumeLayout(false);
+			this.groupBox_433MSCode.ResumeLayout(false);
+			this.panel1.ResumeLayout(false);
+			this.groupBox_315MCode.ResumeLayout(false);
+			this.groupBox_207MCode.ResumeLayout(false);
+			this.groupBox_433MBCode.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1818,8 +2028,24 @@
 		private System.Windows.Forms.Label label_RFUnite;
 		private System.Windows.Forms.NumericUpDown numericUpDown_RFPower;
 		private System.Windows.Forms.Label label_RFPower;
-		private System.Windows.Forms.Label label_DeviceID;
-		private System.Windows.Forms.NumericUpDown numericUpDown_DeviceID;
+		private System.Windows.Forms.Label label_PowerDeviceID;
+		private System.Windows.Forms.NumericUpDown numericUpDown_PowerDeviceID;
+		private System.Windows.Forms.NumericUpDown numericUpDown_CodeDeviceID;
+		private System.Windows.Forms.Label label_CodeDeviceID;
+		private System.Windows.Forms.GroupBox groupBox_CodeConfig;
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.GroupBox groupBox_433MBCode;
+		private System.Windows.Forms.Button button_Open433MBCode;
+		private System.Windows.Forms.Button button_Close433MBCode;
+		private System.Windows.Forms.GroupBox groupBox_207MCode;
+		private System.Windows.Forms.Button button_Open207MCode;
+		private System.Windows.Forms.Button button_Close207MCode;
+		private System.Windows.Forms.GroupBox groupBox_315MCode;
+		private System.Windows.Forms.Button button_Open315MCode;
+		private System.Windows.Forms.Button button_Close315MCode;
+		private System.Windows.Forms.GroupBox groupBox_433MSCode;
+		private System.Windows.Forms.Button button_Open433MSCode;
+		private System.Windows.Forms.Button button_Close433MSCode;
 	}
 }
 

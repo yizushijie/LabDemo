@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RichTextBoxPlusLib
 {
-
 	/// <summary>
 	/// 控件RichTextBox能够显示不用颜色的字体
 	/// </summary>
@@ -34,6 +29,7 @@ namespace RichTextBoxPlusLib
 			rtb.AppendText(text);
 			rtb.SelectionColor = rtb.ForeColor;
 		}
+
 		/// <summary>
 		/// 显示指定颜色
 		/// </summary>
@@ -67,6 +63,7 @@ namespace RichTextBoxPlusLib
 			rtBox.ScrollToCaret();
 			rtBox.Focus();
 		}
+
 		/// <summary>
 		/// 显示信息，带有日期时间
 		/// </summary>
@@ -83,6 +80,7 @@ namespace RichTextBoxPlusLib
 			rtBox.ScrollToCaret();
 			rtBox.Focus();
 		}
+
 		/// <summary>
 		/// 显示信息，不含日期时间
 		/// </summary>
@@ -98,6 +96,7 @@ namespace RichTextBoxPlusLib
 			rtBox.ScrollToCaret();
 			rtBox.Focus();
 		}
+
 		/// <summary>
 		/// 信息显示在顶部,并且含有日期时间
 		/// </summary>

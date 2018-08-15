@@ -1,50 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace COMMPortLib
 {
-	public class USBCOMMPort:COMMPort
+	public class USBCOMMPort : COMMPort
 	{
-		#region 变量定义
-
-		#endregion
-
 		#region 属性定义
+
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		public override string m_COMMPortName
 		{
 			get
 			{
 				return base.m_COMMPortName;
-
 			}
 			set
 			{
 				base.m_COMMPortName = value;
-
 			}
 		}
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		public override int m_COMMPortIndex
 		{
 			get
 			{
 				return base.m_COMMPortIndex;
-
 			}
 			set
 			{
 				base.m_COMMPortIndex = value;
-
 			}
 		}
 
@@ -56,12 +45,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortSTATE;
-
 			}
 			set
 			{
 				base.m_COMMPortSTATE = value;
-
 			}
 		}
 
@@ -73,12 +60,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortSize;
-
 			}
 			set
 			{
 				base.m_COMMPortSize = value;
-
 			}
 		}
 
@@ -90,12 +75,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortReceCRC;
-
 			}
 			set
 			{
 				base.m_COMMPortReceCRC = value;
-
 			}
 		}
 
@@ -107,15 +90,12 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortSendCRC;
-
 			}
 			set
 			{
 				base.m_COMMPortSendCRC = value;
-
 			}
 		}
-
 
 		/// <summary>
 		/// 接收数据缓存区
@@ -125,12 +105,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortReceBytes;
-
 			}
 			set
 			{
 				base.m_COMMPortReceBytes = value;
-
 			}
 		}
 
@@ -142,12 +120,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortSendBytes;
-
 			}
 			set
 			{
 				base.m_COMMPortSendBytes = value;
-
 			}
 		}
 
@@ -159,12 +135,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortUsedTime;
-
 			}
 			set
 			{
 				base.m_COMMPortUsedTime = value;
-
 			}
 		}
 
@@ -176,12 +150,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortErrMsg;
-
 			}
 			set
 			{
 				base.m_COMMPortErrMsg = value;
-
 			}
 		}
 
@@ -193,12 +165,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortForm;
-
 			}
 			set
 			{
 				base.m_COMMPortForm = value;
-
 			}
 		}
 
@@ -210,12 +180,10 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortReceID;
-
 			}
 			set
 			{
 				base.m_COMMPortReceID = value;
-
 			}
 		}
 
@@ -227,28 +195,26 @@ namespace COMMPortLib
 			get
 			{
 				return base.m_COMMPortSendID;
-
 			}
 			set
 			{
 				base.m_COMMPortSendID = value;
-
 			}
 		}
-		#endregion
+
+		#endregion 属性定义
 
 		#region 构造函数
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		public USBCOMMPort() : base()
 		{
-
 		}
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="usedForm"></param>
 		public USBCOMMPort(Form usedForm)
@@ -260,12 +226,7 @@ namespace COMMPortLib
 
 			this.m_COMMPortForm = usedForm;
 		}
-		#endregion
 
-		#region 函数定义
-
-
-
-		#endregion
+		#endregion 构造函数
 	}
 }
