@@ -125,7 +125,7 @@ namespace COMMPortLib
 		/// <summary>
 		/// 接收CRC等级
 		/// </summary>
-		private byte commPortReceCRC = (byte)USE_CRC.CRC_CHECKSUM;//0;
+		private byte commPortReceCRC = (byte)USE_CRC.CRC_CRC8;//0;
 
 		/// <summary>
 		/// 发送CRC等级

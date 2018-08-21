@@ -55,7 +55,7 @@
 			this.menuStrip_LabMdiMenuBar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
 			this.menuStrip_LabMdiMenuBar.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip_LabMdiMenuBar.Name = "menuStrip_LabMdiMenuBar";
-			this.menuStrip_LabMdiMenuBar.Size = new System.Drawing.Size(915, 28);
+			this.menuStrip_LabMdiMenuBar.Size = new System.Drawing.Size(1350, 28);
 			this.menuStrip_LabMdiMenuBar.TabIndex = 1;
 			this.menuStrip_LabMdiMenuBar.Text = "menuStrip1";
 			// 
@@ -131,10 +131,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(915, 601);
+			this.ClientSize = new System.Drawing.Size(1350, 729);
 			this.Controls.Add(this.menuStrip_LabMdiMenuBar);
 			this.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.menuStrip_LabMdiMenuBar;
 			this.Name = "LabMdiForm";

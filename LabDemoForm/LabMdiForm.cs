@@ -208,8 +208,16 @@ namespace LabDemoForm
 			{
 				this.Height = newForm.Height + 100;
 			}
+			else if ((this.Height-newForm.Height)<100)
+			{
+				this.Height = newForm.Height + 100;
+			}
 			//---判断窗体宽度是否合适
 			if (this.Width <= newForm.Width)
+			{
+				this.Width = newForm.Width + 100;
+			}
+			else if ((this.Width-newForm.Width)<100)
 			{
 				this.Width = newForm.Width + 100;
 			}

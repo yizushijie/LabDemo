@@ -176,18 +176,29 @@ namespace DigitalControlRFForm
 			//===编码器的控制
 			this.button_Close433MSCode.Click += new EventHandler(this.button_Click);
 			this.button_Open433MSCode.Click += new EventHandler(this.button_Click);
+			this.button_Open433MSHigh.Click += new EventHandler(this.button_Click);
 
 			this.button_Close315MCode.Click += new EventHandler(this.button_Click);
 			this.button_Open315MCode.Click += new EventHandler(this.button_Click);
+			this.button_Open315MHigh.Click += new EventHandler(this.button_Click);
 
 			this.button_Close207MCode.Click += new EventHandler(this.button_Click);
 			this.button_Open207MCode.Click += new EventHandler(this.button_Click);
+			this.button_Open207MHigh.Click += new EventHandler(this.button_Click);
 
-			this.button_Close433MSCode.Click += new EventHandler(this.button_Click);
-			this.button_Open433MSCode.Click += new EventHandler(this.button_Click);
+			this.button_Close433MBCode.Click += new EventHandler(this.button_Click);
+			this.button_Open433MBCode.Click += new EventHandler(this.button_Click);
+			this.button_Open433MBHigh.Click += new EventHandler(this.button_Click);
+
+			//---灵敏度扫描
+			this.button_ReadScan.Click += new EventHandler(this.button_Click);
 
 			//---读取信号的输出功率
 			this.button_ReadPower.Click += new EventHandler(this.button_Click);
+
+			//---解码器控制
+			this.button_DecodeRST.Click += new EventHandler(this.button_Click);
+			this.button_DecodeRead.Click += new EventHandler(this.button_Click);
 
 			//加载contextMenuTrip的子项---消息显示的清楚和
 			ToolStripItem tsItem;
@@ -290,246 +301,441 @@ namespace DigitalControlRFForm
 				case "button_Read433MSRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFPower433MS(this.numericUpDown_433MSRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFPower433MS(this.numericUpDown_433MSRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_Write433MSRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFPower433MS(this.numericUpDown_433MSRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFPower433MS(this.numericUpDown_433MSRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_Read315MRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFPower315M(this.numericUpDown_315MRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFPower315M(this.numericUpDown_315MRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_Write315MRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFPower315M(this.numericUpDown_315MRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFPower315M(this.numericUpDown_315MRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_Read207MRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFPower207M(this.numericUpDown_207MRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFPower207M(this.numericUpDown_207MRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_Write207MRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFPower207M(this.numericUpDown_207MRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFPower207M(this.numericUpDown_207MRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_Read433MBRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFPower433MB(this.numericUpDown_433MBRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFPower433MB(this.numericUpDown_433MBRFPower,this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_Write433MBRFPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFPower433MB(this.numericUpDown_433MBRFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFPower433MB(this.numericUpDown_433MBRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 				//---信号源功率衰减
 				case "button_ReadRF433MS":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRF433MS(this.numericUpDown_RF433MS, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRF433MS(this.numericUpDown_RF433MS, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRF433MS":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRF433MS(this.numericUpDown_RF433MS, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRF433MS(this.numericUpDown_RF433MS, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRF315M":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRF315M(this.numericUpDown_RF315M, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRF315M(this.numericUpDown_RF315M, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRF315M":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRF315M(this.numericUpDown_RF315M, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRF315M(this.numericUpDown_RF315M, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRF207M":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRF207M(this.numericUpDown_RF207M, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRF207M(this.numericUpDown_RF207M, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRF207M":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRF207M(this.numericUpDown_RF207M, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRF207M(this.numericUpDown_RF207M, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRF433MB":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRF433MB(this.numericUpDown_RF433MB, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRF433MB(this.numericUpDown_RF433MB, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRF433MB":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRF433MB(this.numericUpDown_RF433MB, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRF433MB(this.numericUpDown_RF433MB, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 				//---输出功率的衰减
 				case "button_ReadRFA":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFA(this.numericUpDown_RFA, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFA(this.numericUpDown_RFA, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFA":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFA(this.numericUpDown_RFA, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFA(this.numericUpDown_RFA, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRFB":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFB(this.numericUpDown_RFB, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFB(this.numericUpDown_RFB, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFB":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFB(this.numericUpDown_RFB, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFB(this.numericUpDown_RFB, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRFC":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFC(this.numericUpDown_RFC, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFC(this.numericUpDown_RFC, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFC":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFC(this.numericUpDown_RFC, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFC(this.numericUpDown_RFC, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRFD":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFD(this.numericUpDown_RFD, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFD(this.numericUpDown_RFD, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFD":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFD(this.numericUpDown_RFD, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFD(this.numericUpDown_RFD, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRFE":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFE(this.numericUpDown_RFE, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFE(this.numericUpDown_RFE, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFE":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFE(this.numericUpDown_RFE, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFE(this.numericUpDown_RFE, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRFF":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFF(this.numericUpDown_RFF, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFF(this.numericUpDown_RFF, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFF":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFF(this.numericUpDown_RFF, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFF(this.numericUpDown_RFF, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRFG":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFG(this.numericUpDown_RFG, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFG(this.numericUpDown_RFG, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFG":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFG(this.numericUpDown_RFG, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFG(this.numericUpDown_RFG, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadRFH":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadRFH(this.numericUpDown_RFH, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadRFH(this.numericUpDown_RFH, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_WriteRFH":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.WriteRFH(this.numericUpDown_RFH, this.richTextBox_Msg);
+						this.usedDigitalControlRF.WriteRFH(this.numericUpDown_RFH, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
 
 				case "button_ReadPower":
 					if (this.usedDigitalControlRF != null)
 					{
-						this.usedDigitalControlRF.ReadPower(this.comboBox_RFGenSignal, this.comboBox_RFChannel, this.numericUpDown_RFPower, this.richTextBox_Msg);
+						this.usedDigitalControlRF.ReadPower(this.comboBox_RFGenSignal, this.comboBox_RFChannel, this.numericUpDown_RFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
 					}
 					break;
-
 				case "button_Open433MSCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open433MSCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
 					break;
-
+				case "button_Close433MSCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Close433MSCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
+				case "button_Open433MSHigh":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open433MSHigh(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
 				case "button_Open315MCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open315MCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
 					break;
-
+				case "button_Close315MCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Close315MCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
+				case "button_Open315MHigh":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open315MHigh(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
 				case "button_Open207MCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open207MCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
 					break;
-
+				case "button_Close207MCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Close207MCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
+				case "button_Open207MHigh":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open207MHigh(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
 				case "button_Open433MBCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open433MBCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
 					break;
+				case "button_Close433MBCode":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Close433MBCode(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
+				case "button_Open433MBHigh":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.Open433MBHigh(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
+				//===解码器
+				case "button_DecodeRST":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.DecodeRST(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
+				case "button_DecodeRead":
+					if (this.usedDigitalControlRF != null)
+					{
+						this.usedDigitalControlRF.DecodeRead(this.numericUpDown_CodeDeviceID, this.richTextBox_Msg);
+					}
+					break;
+				case "button_ReadScan":
+					if (this.usedDigitalControlRF != null)
+					{
+						decimal dBmVal = 0;
+						byte cmd = 0;
+						NumericUpDown genPower = new NumericUpDown();
+						NumericUpDown rfChannnelPower = new NumericUpDown();
+						NumericUpDown rfCHOutPower = new NumericUpDown();
+						switch (this.comboBox_RFGen.Text)
+						{
+							case "RF433MS":
+								_return =this.usedDigitalControlRF.ReadRFPower433MS(this.numericUpDown_433MSRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								this.usedDigitalControlRF.ReadRF433MS(this.numericUpDown_RF433MS, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								dBmVal = this.numericUpDown_433MSRFPower.Value;
+								genPower = this.numericUpDown_RF433MS;
+								cmd = (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS;
+								break;
+							case "RF315M":
+								_return = this.usedDigitalControlRF.ReadRFPower315M(this.numericUpDown_315MRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								this.usedDigitalControlRF.ReadRF315M(this.numericUpDown_RF315M, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								dBmVal = this.numericUpDown_315MRFPower.Value;
+								genPower = this.numericUpDown_RF315M;
+								cmd = (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF315M;
+								break;
+							case "RF207M":
+								_return = this.usedDigitalControlRF.ReadRFPower207M(this.numericUpDown_207MRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								this.usedDigitalControlRF.ReadRF207M(this.numericUpDown_RF207M, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								dBmVal = this.numericUpDown_207MRFPower.Value;
+								genPower = this.numericUpDown_RF207M;
+								cmd = (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF207M;
+								break;
+							case "RF433MB":
+								_return = this.usedDigitalControlRF.ReadRFPower433MB(this.numericUpDown_433MBRFPower, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								this.usedDigitalControlRF.ReadRF433MB(this.numericUpDown_RF433MB, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								dBmVal = this.numericUpDown_433MBRFPower.Value;
+								genPower = this.numericUpDown_RF433MB;
+								cmd = (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MB;
+								break;
+							default:
+								break;
+						}
 
+						switch (this.comboBox_RFCH.Text)
+						{
+							case "RFCHA":
+								this.usedDigitalControlRF.ReadRFA(this.numericUpDown_RFA, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFA;
+								rfCHOutPower = this.numericUpDown_RFCHA;
+								break;
+							case "RFCHB":
+								this.usedDigitalControlRF.ReadRFB(this.numericUpDown_RFB, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFB;
+								rfCHOutPower = this.numericUpDown_RFCHB;
+								break;
+							case "RFCHC":
+								this.usedDigitalControlRF.ReadRFC(this.numericUpDown_RFC, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFC;
+								rfCHOutPower = this.numericUpDown_RFCHC;
+								break;
+							case "RFCHD":
+								this.usedDigitalControlRF.ReadRFD(this.numericUpDown_RFD, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFD;
+								rfCHOutPower = this.numericUpDown_RFCHD;
+								break;
+							case "RFCHE":
+								this.usedDigitalControlRF.ReadRFE(this.numericUpDown_RFE, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFE;
+								rfCHOutPower = this.numericUpDown_RFCHE;
+								break;
+							case "RFCHF":
+								this.usedDigitalControlRF.ReadRFF(this.numericUpDown_RFF, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFF;
+								rfCHOutPower = this.numericUpDown_RFCHF;
+								break;
+							case "RFCHG":
+								this.usedDigitalControlRF.ReadRFG(this.numericUpDown_RFG, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFG;
+								rfCHOutPower = this.numericUpDown_RFCHG;
+								break;
+							case "RFCHH":
+								this.usedDigitalControlRF.ReadRFH(this.numericUpDown_RFH, this.numericUpDown_PowerDeviceID, this.richTextBox_Msg);
+								rfChannnelPower = this.numericUpDown_RFH;
+								rfCHOutPower = this.numericUpDown_RFCHH;
+								break;
+							default:
+								break;
+						}
+
+						this.usedDigitalControlRF.DecodeReadScan(cmd,this.numericUpDown_PowerDeviceID,
+								this.numericUpDown_CodeDeviceID, genPower,
+								this.richTextBox_Msg);
+						rfCHOutPower.Value = dBmVal+genPower.Value+rfChannnelPower.Value;
+						switch (this.comboBox_RFCH.Text)
+						{
+							case "RFCHA":
+								this.numericUpDown_GenCHA.Value = genPower.Value;
+								break;
+							case "RFCHB":
+								this.numericUpDown_GenCHB.Value = genPower.Value;
+								break;
+							case "RFCHC":
+								this.numericUpDown_GenCHC.Value = genPower.Value;
+								break;
+							case "RFCHD":
+								this.numericUpDown_GenCHD.Value = genPower.Value;
+								break;
+							case "RFCHE":
+								this.numericUpDown_GenCHE.Value = genPower.Value;
+								break;
+							case "RFCHF":
+								this.numericUpDown_GenCHF.Value = genPower.Value;
+								break;
+							case "RFCHG":
+								this.numericUpDown_GenCHG.Value = genPower.Value;
+								break;
+							case "RFCHH":
+								this.numericUpDown_GenCHH.Value = genPower.Value;
+								break;
+							default:
+								break;
+						}
+					}
+					break;
 				default:
 					break;
 			}

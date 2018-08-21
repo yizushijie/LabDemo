@@ -55,7 +55,9 @@ namespace DigitalControlRFLib
 		GEN_SIGNAL_207M = 3,
 		GEN_SIGNAL_433MB = 4,
 	}
-
+	/// <summary>
+	/// 
+	/// </summary>
 	public enum RF_CHANNEL : byte
 	{
 		RF_NONE = 0,
@@ -68,6 +70,28 @@ namespace DigitalControlRFLib
 		RF_G = 7,
 		RF_H = 8,
 	}
+	/// <summary>
+	/// RF编码信号源的命令
+	/// </summary>
+	public enum RF_CMD_CODE : byte
+	{
+		RF_CODE_NONE =0,
+		RF_CODE_CH1_OPEN  = 1,				//打开RF信号源通道1
+		RF_CODE_CH1_CLOSE = 2,              //关闭RF信号源通道1
+		RF_CODE_CH2_OPEN = 3,				//打开RF信号源通道2
+		RF_CODE_CH2_CLOSE = 4,				//关闭RF信号源通道2
+		RF_CODE_CH3_OPEN = 5,				//打开RF信号源通道3
+		RF_CODE_CH3_CLOSE = 6,				//关闭RF信号源通道3
+		RF_CODE_CH4_OPEN = 7,				//打开RF信号源通道4
+		RF_CODE_CH4_CLOSE = 8,              //关闭RF信号源通道5
+		RF_DECODE_RST = 9,					//复位解码的状态
+		RF_DECODE_READ = 10,				//读取解码的状态
+		RF_CODE_CH1_HIGH = 11,				//信号源通道输出高
+		RF_CODE_CH2_HIGH = 12,				//信号源通道输出高
+		RF_CODE_CH3_HIGH = 13,				//信号源通道输出高
+		RF_CODE_CH4_HIGH = 14,				//信号源通道输出高
+	}
+
 
 	public class DigitalControlRF
 	{
@@ -87,6 +111,11 @@ namespace DigitalControlRFLib
 		/// HMC472通信使用的主命令
 		/// </summary>
 		private const byte CMD_HMC472 = 0xA0;
+
+		/// <summary>
+		/// RF信号源的编码命令
+		/// </summary>
+		private const byte CMD_RF_CODE = 0xA1;
 
 		#endregion 变量定义
 
@@ -244,6 +273,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源初始功率，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -297,6 +327,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源初始功率，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -349,6 +380,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源初始功率，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -402,6 +434,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源初始功率，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -454,6 +487,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源初始功率，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -507,6 +541,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源初始功率，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -559,6 +594,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源初始功率，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -612,6 +648,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源初始功率，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -664,6 +701,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -716,6 +754,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -768,6 +807,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -820,6 +860,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -872,6 +913,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -924,6 +966,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -976,6 +1019,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1028,6 +1072,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1080,6 +1125,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFA信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1132,6 +1178,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFA信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1184,6 +1231,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFB信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1235,6 +1283,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFB信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1286,6 +1335,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFC信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1337,6 +1387,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFC信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1388,6 +1439,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFD信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1440,6 +1492,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFD信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1491,6 +1544,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFE信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1542,6 +1596,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFE信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1593,6 +1648,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFF信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1644,6 +1700,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFF信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1695,6 +1752,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFG信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1746,6 +1804,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFG信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1796,6 +1855,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFH信号源功率衰减值，读取失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1847,6 +1907,7 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "通道RFH信号源功率衰减值，写入失败!\r\n", Color.Red, false);
 				}
 			}
@@ -1880,7 +1941,7 @@ namespace DigitalControlRFLib
 		/// <param name="rfChannel"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public int ReadPower(ComboBox genSignal, ComboBox rfChannel, NumericUpDown nud, RichTextBox msg)
+		public virtual int ReadPower(ComboBox genSignal, ComboBox rfChannel, NumericUpDown nud, RichTextBox msg)
 		{
 			int _return = 1;
 			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
@@ -1960,11 +2021,15 @@ namespace DigitalControlRFLib
 				}
 				else
 				{
+					_return = 1;
 					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "信号源输出功率值，读取失败!\r\n", Color.Red, false);
 				}
 			}
 			return _return;
 		}
+
+
+
 
 		/// <summary>
 		/// 
@@ -1975,7 +2040,7 @@ namespace DigitalControlRFLib
 		/// <param name="nudID"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public int ReadPower(ComboBox genSignal, ComboBox rfChannel, NumericUpDown nud, NumericUpDown nudID, RichTextBox msg)
+		public virtual int ReadPower(ComboBox genSignal, ComboBox rfChannel, NumericUpDown nud, NumericUpDown nudID, RichTextBox msg)
 		{
 			int deviceID = (int)nudID.Value;
 			if ((deviceID >= 0) && (this.usedPort != null))
@@ -1988,6 +2053,747 @@ namespace DigitalControlRFLib
 			}
 
 			return this.ReadPower(genSignal, rfChannel, nud, msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MSCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH1_OPEN };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH1_OPEN) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源编码信号，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源编码信号，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MSCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open433MSCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close433MSCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH1_CLOSE };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH1_CLOSE) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源编码信号，关闭成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源编码信号，关闭失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close433MSCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Close433MSCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MSHigh(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH1_HIGH };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH1_HIGH) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源最大功率输出，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源最大功率输出，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MSHigh(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open433MSHigh(msg);
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open315MCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH2_OPEN };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH2_OPEN) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源编码信号，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源编码信号，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open315MCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open315MCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close315MCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH2_CLOSE };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH2_CLOSE) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源编码信号，关闭成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "315M信号源编码信号，关闭失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close315MCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Close315MCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open315MHigh(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH2_HIGH };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH2_HIGH) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源最大功率输出，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M小信号源最大功率输出，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open315MHigh(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open315MHigh(msg);
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open207MCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH3_OPEN };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH3_OPEN) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源编码信号，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源编码信号，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open207MCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open207MCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close207MCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH3_CLOSE };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH3_CLOSE) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源编码信号，关闭成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源编码信号，关闭失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close207MCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Close207MCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open207MHigh(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH3_HIGH };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH3_HIGH) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源最大功率输出，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "207M信号源最大功率输出，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open207MHigh(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open207MHigh(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MBCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH4_OPEN };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH4_OPEN) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源编码信号，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源编码信号，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MBCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open433MBCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close433MBCode(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH4_CLOSE };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH4_CLOSE) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源编码信号，关闭成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源编码信号，关闭失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Close433MBCode(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Close433MBCode(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MBHigh(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_CODE_CH4_HIGH };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_CODE_CH4_HIGH) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源最大功率输出，打开成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "433M大信号源最大功率输出，打开失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Open433MBHigh(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.Open433MBHigh(msg);
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int DecodeRST(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_DECODE_RST };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 200);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_DECODE_RST) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "解码器复位成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "解码器复位失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int DecodeRST(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.DecodeRST(msg);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int DecodeRead(RichTextBox msg)
+		{
+			int _return = 1;
+			if ((this.usedPort != null) && (this.usedPort.IsAttached()))
+			{
+				byte[] cmd = new byte[] { 0x55, 0x02, CMD_RF_CODE, (byte)RF_CMD_CODE.RF_DECODE_READ };
+				byte[] res = null;
+				_return = this.usedPort.SendCmdAndReadResponse(cmd, ref res, 400);
+				if ((this.usedPort.IsReadValidData(_return)) && (res != null) && (res[0] == 0x5A) && (res[1] == (byte)(res.Length - 2)) && (res[2 + this.usedPort.m_DeviceIDIndex] == CMD_RF_CODE) && (res[3 + this.usedPort.m_DeviceIDIndex] == (byte)RF_CMD_CODE.RF_DECODE_READ) && (res[4 + this.usedPort.m_DeviceIDIndex] == 0x00)&&(res[5 + this.usedPort.m_DeviceIDIndex]==1))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "解码器解码成功!\r\n", Color.Black, false);
+				}
+				else
+				{
+					_return = 1;
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "解码器解码失败!\r\n", Color.Red, false);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="nudID"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int DecodeRead(NumericUpDown nudID, RichTextBox msg)
+		{
+			int deviceID = (int)nudID.Value;
+			if ((deviceID >= 0) && (this.usedPort != null))
+			{
+				this.usedPort.m_DeviceID = deviceID;
+			}
+			else
+			{
+				this.usedPort.m_DeviceID = 0;
+			}
+
+			return this.DecodeRead(msg);
+		}
+
+		public virtual int DecodeReadScan(byte cmd,NumericUpDown rfID, NumericUpDown deviceID,NumericUpDown genPower,RichTextBox msg)
+		{
+			//---读取设备的解码状态
+			int _return = this.DecodeRST(deviceID, msg);
+			if (_return != 0)
+			{
+				return _return;
+			}
+			//---读取设备的解码状态
+			_return= this.DecodeRead(deviceID, msg);
+			if (_return != 0)
+			{
+				if (genPower.Value==(decimal)(-31.5))
+				{
+					RichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "信号源功率衰减达到最大值，即需要修改第二级的衰减功率!\r\n", Color.Red, false);
+				}
+			}
+			else
+			{
+				genPower.Value = (decimal) (-31.5);
+				//---解码成功，此时自动将第一级的衰减开启到最大
+				switch (cmd)
+				{
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS:
+						_return= this.WriteRF433MS(genPower, rfID, msg);
+						break;
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF315M:
+						_return = this.WriteRF315M(genPower, rfID, msg);
+						break;
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF207M:
+						_return = this.WriteRF207M(genPower, rfID, msg);
+						break;
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MB:
+						_return = this.WriteRF433MB(genPower, rfID, msg);
+						break;
+					default:
+						break;
+				}
+				if (_return!=0)
+				{
+					return _return;
+				}
+			}
+
+			int i = 0;
+			for ( i = 0; i < 63; i++)
+			{
+				genPower.Value +=(decimal)(0.5);
+				//---解码成功，此时自动将第一级的衰减开启到最大
+				switch (cmd)
+				{
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MS:
+						_return = this.WriteRF433MS(genPower, rfID, msg);
+						break;
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF315M:
+						_return = this.WriteRF315M(genPower, rfID, msg);
+						break;
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF207M:
+						_return = this.WriteRF207M(genPower, rfID, msg);
+						break;
+					case (byte)HMC472_CMD_MENU.CMD_HMC472_WRITE_RF433MB:
+						_return = this.WriteRF433MB(genPower, rfID, msg);
+						break;
+					default:
+						break;
+				}
+				if (_return != 0)
+				{
+					return _return;
+				}
+				//---读取解码结果
+				_return = this.DecodeRST(deviceID, msg);
+				if (_return != 0)
+				{
+					return _return;
+				}
+				//---读取设备的解码状态
+				_return = this.DecodeRead(deviceID, msg);
+				if (_return==0)
+				{
+					break;
+				}
+			}
+			return _return;
 		}
 
 		#endregion 函数定义
