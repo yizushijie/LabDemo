@@ -210,6 +210,21 @@ namespace COMMPortLib
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public override bool m_COMMEnableDataReceivedEvent
+		{
+			get
+			{
+				return base.m_COMMEnableDataReceivedEvent;
+			}
+			set
+			{
+				base.m_COMMEnableDataReceivedEvent = value;
+			}
+		}
+
+		/// <summary>
 		/// 接收报头
 		/// </summary>
 		public override byte m_COMMPortReceID
@@ -499,160 +514,67 @@ namespace COMMPortLib
 		/// </summary>
 		/// <param name="cbb"></param>
 		/// <returns></returns>
-		private bool SerialCOMMPortUpDateDevices(ComboBox cbb = null, RichTextBox rtbMsg = null)
+		private bool SerialCOMMPortUpdateDevices(ComboBox cbb = null, RichTextBox rtbMsg = null)
 		{
+			bool _return = true;
+
 			COMMDevice[] deviceNames = this.SerialCOMMPortGetDevices();
 			//---判断设备是否存在
 			if ((deviceNames == null) || (deviceNames.Length == 0))
 			{
-				return false;
-			}
-
-			this.m_COMMPortErrMsg = string.Empty;
-			int i = 0;
-			//---获取设备的名称
-			string[] newDeviceNames = this.SerialCOMMPortUpDateDeviceNames(deviceNames);
-			string[] oddDeviceNames = this.SerialCOMMPortUpDateDeviceNames(m_COMMPortDevices);
-			//---判断保存的设备数据
-			if ((this.m_COMMPortDevices == null) || (this.m_COMMPortDevices.Length == 0))
-			{
-				this.m_COMMPortDevices = new COMMDevice[deviceNames.Length];
-				//---数据拷贝到缓存区
-				Array.Copy(deviceNames, this.m_COMMPortDevices, deviceNames.Length);
-				//---端口拷贝到控件
-				if (cbb != null)
+				if (cbb.Items.Count != 0)
 				{
+					this.m_COMMPortErrMsg = string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") +
+											" 端口：" + cbb.Text + "移除\r\n";
 					//---清理当前设备的集合列表
 					cbb.Items.Clear();
-					//---重新添加设备集合列表
-					cbb.Items.AddRange(this.SerialCOMMPortUpDateDeviceNames(deviceNames));
-					//---选择默认设备序号
-					cbb.SelectedIndex = 0;
-					//---设备处于不工作状态
-					this.m_COMMPortSTATE = false;
+					cbb.SelectedIndex = -1;
+					cbb.Text = string.Empty;
 				}
-				for (i = 0; i < this.m_COMMPortDevices.Length; i++)
-				{
-					this.m_COMMPortErrMsg += string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" + this.m_COMMPortDevices[i].name + "插入\r\n";
-				}
+				_return = false;
 			}
 			else
 			{
-				//---判断两个字符串是否相等
-				if (Enumerable.SequenceEqual(this.SerialCOMMPortUpDateDeviceNames(this.m_COMMPortDevices),
-					this.SerialCOMMPortUpDateDeviceNames(deviceNames)))
+				this.m_COMMPortErrMsg = string.Empty;
+				int i = 0;
+				//---获取设备的名称
+				string[] newDeviceNames = this.SerialCOMMPortUpDateDeviceNames(deviceNames);
+				string[] oddDeviceNames = this.SerialCOMMPortUpDateDeviceNames(m_COMMPortDevices);
+				//---判断保存的设备数据
+				if ((this.m_COMMPortDevices == null) || (this.m_COMMPortDevices.Length == 0))
 				{
-					if (cbb != null)
-					{
-						//---判断当前设备列表是否显示为空
-						if ((cbb.Text != string.Empty) && (cbb.Text != null) && (cbb.Text != ""))
-						{
-							//cbb.SelectedIndex = 0;
-							//---获取当前设备在设备集合中位置
-							int index = Array.IndexOf(oddDeviceNames, cbb.Text);
-							if (index >= 0)
-							{
-								cbb.SelectedIndex = index;
-							}
-							else
-							{
-								cbb.SelectedIndex = 0;
-								//---设备处于不工作状态
-								this.m_COMMPortSTATE = false;
-							}
-						}
-					}
-				}
-				else
-				{
-					//---设备集合发生变化
-					if (oddDeviceNames.Length == newDeviceNames.Length)
-					{
-						//---设备集合的大小相等
-						for (i = 0; i < oddDeviceNames.Length; i++)
-						{
-							//---判断是否有设备插入
-							if (!oddDeviceNames.Contains(newDeviceNames[i]))
-							{
-								this.m_COMMPortErrMsg +=
-									string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
-									newDeviceNames[i] + "插入\r\n";
-							}
-
-							//---判断是否有设备移除
-							if (!newDeviceNames.Contains(oddDeviceNames[i]))
-							{
-								this.m_COMMPortErrMsg +=
-									string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
-									oddDeviceNames[i] + "移除\r\n";
-							}
-						}
-					}
-					else if (oddDeviceNames.Length > newDeviceNames.Length)
-					{
-						//---历史设备集合的个数大于当前设备的个数;则有设备移除，需要更新设备集合
-						for (i = 0; i < oddDeviceNames.Length; i++)
-						{
-							//---判断是否有设备移除
-							if (!newDeviceNames.Contains(oddDeviceNames[i]))
-							{
-								this.m_COMMPortErrMsg +=
-									string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
-									oddDeviceNames[i] + "移除\r\n";
-							}
-						}
-
-						//---重置缓存区的大小
-						Array.Resize<string>(ref oddDeviceNames, newDeviceNames.Length);
-					}
-					else
-					{
-						//---历史设备集合的个数小于当前设备的个数;则有设备插入，需要更新设备集合
-						for (i = 0; i < newDeviceNames.Length; i++)
-						{
-							//---判断是否有设备移除
-							if (!oddDeviceNames.Contains(newDeviceNames[i]))
-							{
-								this.m_COMMPortErrMsg +=
-									string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
-									newDeviceNames[i] + "插入\r\n";
-							}
-						}
-
-						//---重置缓存区的大小
-						Array.Resize<string>(ref oddDeviceNames, newDeviceNames.Length);
-					}
-
-					//---更新当前设备集合
-					Array.Copy(newDeviceNames, oddDeviceNames, newDeviceNames.Length);
-					//---申请缓存区
 					this.m_COMMPortDevices = new COMMDevice[deviceNames.Length];
 					//---数据拷贝到缓存区
 					Array.Copy(deviceNames, this.m_COMMPortDevices, deviceNames.Length);
-					//---判断当前端口的信息
+					//---端口拷贝到控件
 					if (cbb != null)
 					{
 						//---清理当前设备的集合列表
 						cbb.Items.Clear();
 						//---重新添加设备集合列表
-						cbb.Items.AddRange(oddDeviceNames);
-						//---判断默认信息是否有效
-						if ((cbb.Text == string.Empty) || (cbb.Text == null) || (cbb.Text == ""))
+						cbb.Items.AddRange(this.SerialCOMMPortUpDateDeviceNames(deviceNames));
+						//---选择默认设备序号
+						cbb.SelectedIndex = 0;
+						//---设备处于不工作状态
+						this.m_COMMPortSTATE = false;
+					}
+					for (i = 0; i < this.m_COMMPortDevices.Length; i++)
+					{
+						this.m_COMMPortErrMsg += string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" + this.m_COMMPortDevices[i].name + "插入\r\n";
+					}
+				}
+				else
+				{
+					//---判断两个字符串是否相等
+					if (Enumerable.SequenceEqual(this.SerialCOMMPortUpDateDeviceNames(this.m_COMMPortDevices),
+						this.SerialCOMMPortUpDateDeviceNames(deviceNames)))
+					{
+						if (cbb != null)
 						{
-							cbb.SelectedIndex = 0;
-							//---设备处于不工作状态
-							this.m_COMMPortSTATE = false;
-						}
-						else
-						{
-							if (!oddDeviceNames.Contains(cbb.Text))
+							//---判断当前设备列表是否显示为空
+							if ((cbb.Text != string.Empty) && (cbb.Text != null) && (cbb.Text != ""))
 							{
-								cbb.SelectedIndex = 0;
-								//---设备处于不工作状态
-								this.m_COMMPortSTATE = false;
-							}
-							else
-							{
+								//cbb.SelectedIndex = 0;
 								//---获取当前设备在设备集合中位置
 								int index = Array.IndexOf(oddDeviceNames, cbb.Text);
 								if (index >= 0)
@@ -664,6 +586,112 @@ namespace COMMPortLib
 									cbb.SelectedIndex = 0;
 									//---设备处于不工作状态
 									this.m_COMMPortSTATE = false;
+								}
+							}
+						}
+					}
+					else
+					{
+						//---设备集合发生变化
+						if (oddDeviceNames.Length == newDeviceNames.Length)
+						{
+							//---设备集合的大小相等
+							for (i = 0; i < oddDeviceNames.Length; i++)
+							{
+								//---判断是否有设备插入
+								if (!oddDeviceNames.Contains(newDeviceNames[i]))
+								{
+									this.m_COMMPortErrMsg +=
+										string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
+										newDeviceNames[i] + "插入\r\n";
+								}
+
+								//---判断是否有设备移除
+								if (!newDeviceNames.Contains(oddDeviceNames[i]))
+								{
+									this.m_COMMPortErrMsg +=
+										string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
+										oddDeviceNames[i] + "移除\r\n";
+								}
+							}
+						}
+						else if (oddDeviceNames.Length > newDeviceNames.Length)
+						{
+							//---历史设备集合的个数大于当前设备的个数;则有设备移除，需要更新设备集合
+							for (i = 0; i < oddDeviceNames.Length; i++)
+							{
+								//---判断是否有设备移除
+								if (!newDeviceNames.Contains(oddDeviceNames[i]))
+								{
+									this.m_COMMPortErrMsg +=
+										string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
+										oddDeviceNames[i] + "移除\r\n";
+								}
+							}
+
+							//---重置缓存区的大小
+							Array.Resize<string>(ref oddDeviceNames, newDeviceNames.Length);
+						}
+						else
+						{
+							//---历史设备集合的个数小于当前设备的个数;则有设备插入，需要更新设备集合
+							for (i = 0; i < newDeviceNames.Length; i++)
+							{
+								//---判断是否有设备移除
+								if (!oddDeviceNames.Contains(newDeviceNames[i]))
+								{
+									this.m_COMMPortErrMsg +=
+										string.Format("{0} {1}", System.DateTime.Now.ToString(), "：") + " 端口：" +
+										newDeviceNames[i] + "插入\r\n";
+								}
+							}
+
+							//---重置缓存区的大小
+							Array.Resize<string>(ref oddDeviceNames, newDeviceNames.Length);
+						}
+
+						//---更新当前设备集合
+						Array.Copy(newDeviceNames, oddDeviceNames, newDeviceNames.Length);
+						//---申请缓存区
+						this.m_COMMPortDevices = new COMMDevice[deviceNames.Length];
+						//---数据拷贝到缓存区
+						Array.Copy(deviceNames, this.m_COMMPortDevices, deviceNames.Length);
+						//---判断当前端口的信息
+						if (cbb != null)
+						{
+							//---清理当前设备的集合列表
+							cbb.Items.Clear();
+							//---重新添加设备集合列表
+							cbb.Items.AddRange(oddDeviceNames);
+							//---判断默认信息是否有效
+							if ((cbb.Text == string.Empty) || (cbb.Text == null) || (cbb.Text == ""))
+							{
+								cbb.SelectedIndex = 0;
+								//---设备处于不工作状态
+								this.m_COMMPortSTATE = false;
+							}
+							else
+							{
+								if (!oddDeviceNames.Contains(cbb.Text))
+								{
+									cbb.SelectedIndex = 0;
+									//---设备处于不工作状态
+									this.m_COMMPortSTATE = false;
+								}
+								else
+								{
+									//---获取当前设备在设备集合中位置
+									int index = Array.IndexOf(oddDeviceNames, cbb.Text);
+									if (index >= 0)
+									{
+										cbb.SelectedIndex = index;
+									}
+									else
+									{
+										cbb.SelectedIndex = 0;
+										//---设备处于不工作状态
+										this.m_COMMPortSTATE = false;
+									}
 								}
 							}
 						}
@@ -940,7 +968,7 @@ namespace COMMPortLib
 		/// <returns></returns>
 		public override int Init(ComboBox cbb = null, RichTextBox msg = null)
 		{
-			this.SerialCOMMPortUpDateDevices(cbb, msg);
+			this.SerialCOMMPortUpdateDevices(cbb, msg);
 			return 1;
 		}
 
@@ -1088,6 +1116,17 @@ namespace COMMPortLib
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public override int ReadResponse(int time = 200)
+		{
+			byte[] temp = null;
+			return this.ReadResponse(ref temp, time);
+		}
+
+		/// <summary>
 		///
 		/// </summary>
 		/// <param name="cmd"></param>
@@ -1111,12 +1150,30 @@ namespace COMMPortLib
 			{
 				if (this.m_COMMPortForm != null)
 				{
-					MessageBoxPlus.Show(this.m_COMMPortForm, "端口初始化失败!!!", "错误提示");
+					MessageBoxPlus.Show(this.m_COMMPortForm, "端口初始化失败!!!", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				else
 				{
-					MessageBox.Show("端口初始化失败!!!", "错误提示");
+					MessageBox.Show("端口初始化失败!!!", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cmd"></param>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public override int ReadResponse(ref List<byte> cmd, int time = 200)
+		{
+			byte[] temp = null;
+			int _return = this.ReadResponse(ref temp, time);
+			cmd = new List<byte>();
+			if ((_return==0)&&(temp!=null)&&(temp.Length>2))
+			{
+				cmd.AddRange(temp);
 			}
 			return _return;
 		}
@@ -1172,6 +1229,11 @@ namespace COMMPortLib
 					Application.DoEvents();
 					try
 					{
+						//---判断是否注册了接收事件
+						if (this.m_COMMEnableDataReceivedEvent)
+						{
+							this.UnRegisterEventHandler();
+						}
 						//---关闭端口
 						this.usedSerialPort.Close();
 					}
@@ -1255,11 +1317,11 @@ namespace COMMPortLib
 				{
 					if (this.m_COMMPortForm != null)
 					{
-						MessageBoxPlus.Show(this.m_COMMPortForm, this.m_COMMPortErrMsg, "错误提示");
+						MessageBoxPlus.Show(this.m_COMMPortForm, this.m_COMMPortErrMsg, "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 					else
 					{
-						MessageBox.Show(this.m_COMMPortErrMsg, "错误提示");
+						MessageBox.Show(this.m_COMMPortErrMsg, "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 				}
 			}
@@ -1267,11 +1329,11 @@ namespace COMMPortLib
 			{
 				if (this.m_COMMPortForm != null)
 				{
-					MessageBoxPlus.Show(this.m_COMMPortForm, "端口名称不合法!\r\n", "错误提示");
+					MessageBoxPlus.Show(this.m_COMMPortForm, "端口名称不合法!\r\n", "错误提示",MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				else
 				{
-					MessageBox.Show("端口名称不合法!\r\n", "错误提示");
+					MessageBox.Show("端口名称不合法!\r\n", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 			return _return;
@@ -1336,6 +1398,11 @@ namespace COMMPortLib
 					Application.DoEvents();
 					try
 					{
+						//---关闭的时候，如果挂载了事件，首先注销事件
+						if (this.m_COMMEnableDataReceivedEvent)
+						{
+							this.UnRegisterEventHandler();
+						}
 						this.usedSerialPort.Close();
 						_return = 0;
 					}
@@ -1355,7 +1422,7 @@ namespace COMMPortLib
 				{
 					this.m_COMMPortErrMsg += "端口：" + name + "关闭成功!\r\n";
 				}
-				//---
+				//---消息显示
 				if (msg != null)
 				{
 					Color msgColor = Color.Black;
@@ -1501,6 +1568,39 @@ namespace COMMPortLib
 		private delegate void AsynUpdateRichTextBox(byte[] cmd);
 
 		/// <summary>
+		/// 注册事件
+		/// </summary>
+		/// <param name="msg"></param>
+		public override void RegisterEventHandler(RichTextBox msg = null)
+		{
+			if (this.usedSerialPort != null)
+			{
+				if (this.m_COMMEnableDataReceivedEvent!=true)
+				{
+					//---注册接收事件处理函数
+					this.usedSerialPort.DataReceived += DataReceivedEvent;
+					this.m_COMMEnableDataReceivedEvent = true;
+				}
+			}
+		}
+
+		/// <summary>
+		/// 注销事件
+		/// </summary>
+		public override void UnRegisterEventHandler()
+		{
+			if (this.usedSerialPort != null)
+			{
+				if (this.m_COMMEnableDataReceivedEvent)
+				{
+					//---注销接收事件处理函数
+					this.usedSerialPort.DataReceived -= DataReceivedEvent;
+					this.m_COMMEnableDataReceivedEvent = false;
+				}
+			}
+		}
+
+		/// <summary>
 		///
 		/// </summary>
 		/// <param name="m"></param>
@@ -1514,12 +1614,12 @@ namespace COMMPortLib
 				{
 					case CWndProMsgConst.WM_DEVICECHANGE:
 						break;
-
-					case CWndProMsgConst.DBT_DEVICEARRIVAL:                 //设备插入或者更新，并且可以使用
-					case CWndProMsgConst.DBT_DEVICEREMOVECOMPLETE:          //设备卸载或者拔出
+					//---设备插入或者更新，并且可以使用
+					case CWndProMsgConst.DBT_DEVICEARRIVAL:
+					//---设备卸载或者拔出
+					case CWndProMsgConst.DBT_DEVICEREMOVECOMPLETE:        
 						this.Init(cbb, msg);
 						break;
-
 					default:
 						break;
 				}
@@ -1527,12 +1627,23 @@ namespace COMMPortLib
 		}
 
 		/// <summary>
-		///
+		/// 数据接收事件
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		public override void DataReceivedEvent(object sender, EventArgs e)
 		{
+			//---判断发生的事件类型
+			if (e.ToString().Contains("SerialDataReceivedEventArgs"))
+			{
+				if ((this.usedSerialPort != null) && (this.usedSerialPort.IsOpen) && (this.usedSerialPort.BytesToRead > 0))
+				{
+					if (this.ReadResponse(200)==0)
+					{
+
+					}
+				}
+			}
 		}
 
 		#endregion 事件定义

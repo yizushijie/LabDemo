@@ -168,6 +168,11 @@ namespace COMMPortLib
 		private byte commPortSendID = 0x55;
 
 		/// <summary>
+		/// 是否使能数据接收事件
+		/// </summary>
+		private bool commEnableDataReceivedEvent = false;
+
+		/// <summary>
 		/// 当前设备的信息
 		/// </summary>
 		private COMMDevice[] commPortDevices = null;
@@ -348,6 +353,21 @@ namespace COMMPortLib
 			set
 			{
 				this.commPortForm = value;
+			}
+		}
+
+		/// <summary>
+		/// 接收事件使能
+		/// </summary>
+		public virtual bool m_COMMEnableDataReceivedEvent
+		{
+			get
+			{
+				return this.commEnableDataReceivedEvent;
+			}
+			set
+			{
+				this.commEnableDataReceivedEvent = value;
 			}
 		}
 
@@ -655,6 +675,16 @@ namespace COMMPortLib
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cmd"></param>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public virtual int ReadResponse( int time = 200)
+		{
+			return 1;
+		}
+		/// <summary>
 		///
 		/// </summary>
 		/// <param name="cmd"></param>
@@ -665,6 +695,16 @@ namespace COMMPortLib
 			return 1;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cmd"></param>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public virtual int ReadResponse(ref List<byte> cmd, int time = 200)
+		{
+			return 1;
+		}
 		/// <summary>
 		///
 		/// </summary>
@@ -691,6 +731,23 @@ namespace COMMPortLib
 
 		#region 事件函数
 
+
+		/// <summary>
+		/// 注册事件
+		/// </summary>
+		/// <param name="msg"></param>
+		public virtual void RegisterEventHandler(RichTextBox msg = null)
+		{
+
+		}
+
+		/// <summary>
+		/// 卸载事件
+		/// </summary>
+		public virtual void UnRegisterEventHandler()
+		{
+
+		}
 		/// <summary>
 		/// 系统消息通知设备的拔插
 		/// </summary>

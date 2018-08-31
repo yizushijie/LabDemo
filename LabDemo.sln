@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabDemoForm", "LabDemoForm\LabDemoForm.csproj", "{EFA4B9B3-2F42-4BFE-A5D2-5DC3AD61E011}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalControlRFForm", "DigitalControlRFForm\DigitalControlRFForm.csproj", "{598C9ABB-2A24-4856-80D8-425147122D44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalControlRF", "DigitalControlRF\DigitalControlRF.csproj", "{51DA0A8F-9ACE-43A6-AE9B-B55A9703C8AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootLoaderForm", "BootLoaderForm\BootLoaderForm.csproj", "{DB558560-D4DD-48B0-B80D-CDBA7268E5FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootLoader", "BootLoader\BootLoader.csproj", "{BDCA358C-DC6A-415A-A659-07A1FE779E3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,8 +73,19 @@ Global
 		{51DA0A8F-9ACE-43A6-AE9B-B55A9703C8AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51DA0A8F-9ACE-43A6-AE9B-B55A9703C8AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51DA0A8F-9ACE-43A6-AE9B-B55A9703C8AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB558560-D4DD-48B0-B80D-CDBA7268E5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB558560-D4DD-48B0-B80D-CDBA7268E5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB558560-D4DD-48B0-B80D-CDBA7268E5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB558560-D4DD-48B0-B80D-CDBA7268E5FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCA358C-DC6A-415A-A659-07A1FE779E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCA358C-DC6A-415A-A659-07A1FE779E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCA358C-DC6A-415A-A659-07A1FE779E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCA358C-DC6A-415A-A659-07A1FE779E3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB3D478C-3259-4512-976A-A1FD012FEC12}
 	EndGlobalSection
 EndGlobal

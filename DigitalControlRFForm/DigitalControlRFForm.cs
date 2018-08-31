@@ -212,8 +212,8 @@ namespace DigitalControlRFForm
 		{
 		}
 
-		/// <summary>  button_Read433MSRFPower
-		/// 添加子菜单  button_Write433MSRFPowe
+		/// <summary>  
+		/// 添加子菜单  
 		/// </summary>
 		/// <param name="text">要显示的文字，如果为 - 则显示为分割线</param>
 		/// <param name="cms">要添加到的子菜单集合</param>

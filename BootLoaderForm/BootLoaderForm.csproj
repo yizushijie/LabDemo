@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{598C9ABB-2A24-4856-80D8-425147122D44}</ProjectGuid>
+    <ProjectGuid>{DB558560-D4DD-48B0-B80D-CDBA7268E5FA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DigitalControlRFForm</RootNamespace>
-    <AssemblyName>DigitalControlRFForm</AssemblyName>
+    <RootNamespace>BootLoaderForm</RootNamespace>
+    <AssemblyName>BootLoaderForm</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,16 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DigitalControlRFForm.cs">
+    <Compile Include="BootLoaderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DigitalControlRFForm.Designer.cs">
-      <DependentUpon>DigitalControlRFForm.cs</DependentUpon>
+    <Compile Include="BootLoaderForm.Designer.cs">
+      <DependentUpon>BootLoaderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DigitalControlRFForm.resx">
-      <DependentUpon>DigitalControlRFForm.cs</DependentUpon>
+    <EmbeddedResource Include="BootLoaderForm.resx">
+      <DependentUpon>BootLoaderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -64,7 +62,6 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -77,28 +74,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\BootLoader\BootLoader.csproj">
+      <Project>{BDCA358C-DC6A-415A-A659-07A1FE779E3D}</Project>
+      <Name>BootLoader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\COMMPort\COMMPort.csproj">
-      <Project>{785FBEA4-49BE-473A-B1C9-0BF762A79859}</Project>
+      <Project>{785fbea4-49be-473a-b1c9-0bf762a79859}</Project>
       <Name>COMMPort</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DigitalControlRF\DigitalControlRF.csproj">
-      <Project>{51DA0A8F-9ACE-43A6-AE9B-B55A9703C8AA}</Project>
-      <Name>DigitalControlRF</Name>
+    <ProjectReference Include="..\GenFunc\GenFunc.csproj">
+      <Project>{167d490d-d904-4196-8aa3-54ab9a2b6b11}</Project>
+      <Name>GenFunc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HexBox\HexBox.csproj">
+      <Project>{be35d7aa-a064-4fcf-9218-0a6d2f5a5633}</Project>
+      <Name>HexBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HexFile\HexFile.csproj">
+      <Project>{3664c4ee-ce0a-449f-b3e5-6b0d1ea34479}</Project>
+      <Name>HexFile</Name>
     </ProjectReference>
     <ProjectReference Include="..\MessageBoxPlus\MessageBoxPlus.csproj">
-      <Project>{E54A51A6-A054-4F21-AC22-A827B5EF4D36}</Project>
+      <Project>{e54a51a6-a054-4f21-ac22-a827b5ef4d36}</Project>
       <Name>MessageBoxPlus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RichTextBoxPlus\RichTextBoxPlus.csproj">
+      <Project>{fc2d572c-5cee-40da-8c1b-583e693602aa}</Project>
+      <Name>RichTextBoxPlus</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
