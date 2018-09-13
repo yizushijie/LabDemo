@@ -51,7 +51,7 @@ namespace GenFuncLib
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
 		/// <returns></returns>
-		public static UInt32 CRC_CRC32_Table(byte[] cmd, int length)
+		public static UInt32 GenFuncCRC32Table(byte[] cmd, int length)
 		{
 			UInt32 nReg = 0xFFFFFFFF;//CRC寄存器
 			UInt32 nTemp = 0;
@@ -154,7 +154,7 @@ namespace GenFuncLib
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
 		/// <returns></returns>
-		public static UInt16 CRC_CRC16_Table(byte[] cmd, int length)
+		public static UInt16 GenFuncCRC16Table(byte[] cmd, int length)
 		{
 			byte nTemp;
 			UInt32 nReg = 0;
@@ -219,7 +219,7 @@ namespace GenFuncLib
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
 		/// <returns></returns>
-		public static byte CRC_CRC8_Table(byte[] cmd, int length)
+		public static byte GenFuncCRC8Table(byte[] cmd, int length)
 		{
 			byte nTemp;
 			byte nReg = 0;
@@ -242,7 +242,7 @@ namespace GenFuncLib
 		/// <param name="cmd"></param>
 		/// <param name="length"></param>
 		/// <returns></returns>
-		public static byte CRC_CheckSum(byte[] cmd, int length)
+		public static byte GenFuncCRCCheckSum(byte[] cmd, int length)
 		{
 			UInt32 i = 0;
 			byte _return = 0;

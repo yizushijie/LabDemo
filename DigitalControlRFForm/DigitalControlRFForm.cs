@@ -1,4 +1,5 @@
-﻿using COMMPortLib;
+﻿
+using COMMPortLib;
 using DigitalControlRFLib;
 using MessageBoxPlusLib;
 using System;

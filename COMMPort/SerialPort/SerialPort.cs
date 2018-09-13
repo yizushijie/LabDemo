@@ -1,4 +1,5 @@
-﻿using GenFuncLib;
+﻿
+using GenFuncLib;
 using MessageBoxPlusLib;
 using RichTextBoxPlusLib;
 using System;
@@ -35,10 +36,7 @@ namespace COMMPortLib
 		/// </summary>
 		private StopBits stopBits = StopBits.One;
 
-		/// <summary>
-		/// 使用的串口信息
-		/// </summary>
-		private SerialPort usedSerialPort = null;
+		
 
 		#endregion 变量定义
 
@@ -300,14 +298,29 @@ namespace COMMPortLib
 			}
 		}
 
-		#endregion 属性定义
+        /// <summary>
+        /// 还用的串口
+        /// </summary>
+        public override SerialPort m_COMMSerialPort
+        {
+            get
+            {
+                return base.m_COMMSerialPort;
+            }
+            set
+            {
+                base.m_COMMSerialPort = value;
+            }
+        }
 
-		#region 构造函数
+        #endregion 属性定义
 
-		/// <summary>
-		///
-		/// </summary>
-		public SerialCOMMPort() : base()
+        #region 构造函数
+
+        /// <summary>
+        ///
+        /// </summary>
+        public SerialCOMMPort() : base()
 		{
 		}
 
@@ -340,6 +353,8 @@ namespace COMMPortLib
 			this.m_COMMPortForm = usedForm;
 			//---设置多设备通信的设备ID地址
 			this.m_DeviceID = deviceID;
+
+            //---命令索引修改
 			if (this.m_DeviceID > 0)
 			{
 				this.m_DeviceIDIndex = 1;
@@ -350,16 +365,25 @@ namespace COMMPortLib
 		///
 		/// </summary>
 		/// <param name="usedForm"></param>
-		public SerialCOMMPort(Form usedForm, int bandRate, int size)
+		public SerialCOMMPort(Form usedForm, int baudRate, int size)
 		{
 			if (this.m_COMMPortForm == null)
 			{
 				this.m_COMMPortForm = new Form();
 			}
-
 			this.m_COMMPortForm = usedForm;
 
-			this.m_COMMPortSize = size;
+            //---通信波特率
+            if (this.baudRate!=baudRate)
+            {
+                this.baudRate = baudRate;
+            }
+
+            //---缓存区的大小
+            if (this.m_COMMPortSize != size)
+            {
+                this.m_COMMPortSize = size;
+            }
 		}
 
 		/// <summary>
@@ -367,7 +391,7 @@ namespace COMMPortLib
 		/// </summary>
 		~SerialCOMMPort()
 		{
-			this.usedSerialPort = null;
+			this.m_COMMSerialPort = null;
 		}
 
 		#endregion 构造函数
@@ -714,7 +738,7 @@ namespace COMMPortLib
 					RichTextBoxPlus.AppendTextInfoTopWithoutDateTime(rtbMsg, this.m_COMMPortErrMsg, Color.Black, false);
 				}
 			}
-			return true;
+			return _return;
 		}
 
 		/// <summary>
@@ -746,9 +770,9 @@ namespace COMMPortLib
 				switch (taskStep)
 				{
 					case 0:         //---获取数据报头
-						if (this.usedSerialPort.BytesToRead > 0)
+						if (this.m_COMMSerialPort.BytesToRead > 0)
 						{
-							temp = this.usedSerialPort.ReadByte();
+							temp = this.m_COMMSerialPort.ReadByte();
 							//---读取报头
 							if ((byte)temp == this.m_COMMPortReceID)
 							{
@@ -763,10 +787,10 @@ namespace COMMPortLib
 						break;
 
 					case 1:         //---获取数据长度
-						if (this.usedSerialPort.BytesToRead > 0)
+						if (this.m_COMMSerialPort.BytesToRead > 0)
 						{
 							//---读取接收到的数据
-							temp = this.usedSerialPort.ReadByte();
+							temp = this.m_COMMSerialPort.ReadByte();
 							//---数据长度的合法性验证
 							if ((temp > 0) && (temp < (this.m_COMMPortSize - 1)))
 							{
@@ -787,10 +811,10 @@ namespace COMMPortLib
 						break;
 
 					case 2:         //---获取数据
-						if (this.usedSerialPort.BytesToRead > 0)
+						if (this.m_COMMSerialPort.BytesToRead > 0)
 						{
 							//---读取接收到的数据
-							temp = this.usedSerialPort.ReadByte();
+							temp = this.m_COMMSerialPort.ReadByte();
 							this.m_COMMPortReceBytes.dateBytes.Add((byte)temp);
 							//---重置时间标签
 							startTime = DateTime.Now;
@@ -817,7 +841,7 @@ namespace COMMPortLib
 				}
 
 				//---判断接收到的数据
-				if ((taskStep == 2) && ((this.m_COMMPortReceBytes.dateBytes.Count - 2) == this.m_COMMPortReceBytes.dateBytes[1]))
+				if ((taskStep == 2) &&(this.m_COMMPortReceBytes!=null) &&(this.m_COMMPortReceBytes.dateBytes.Count>2) &&((this.m_COMMPortReceBytes.dateBytes.Count - 2) == this.m_COMMPortReceBytes.dateBytes[1]))
 				{
 					//---退出当前while循环
 					isWork = false;
@@ -837,7 +861,7 @@ namespace COMMPortLib
 					//---修正数据的实际长度
 					cmd[1] -= 1;
 					//---计算校验和
-					byte checkSum = GenFunc.CRC_CheckSum(cmd, (cmd.Length - 1));
+					byte checkSum = GenFunc.GenFuncCRCCheckSum(cmd, (cmd.Length - 1));
 					//---判断校验和信息
 					if (checkSum != cmd[cmd.Length - 1])
 					{
@@ -853,7 +877,7 @@ namespace COMMPortLib
 					//---修正数据的实际长度
 					cmd[1] -= 1;
 					//---计算校验和
-					byte crc8 = GenFunc.CRC_CRC8_Table(cmd, (cmd.Length - 1));
+					byte crc8 = GenFunc.GenFuncCRC8Table(cmd, (cmd.Length - 1));
 					//---判断校验和信息
 					if (crc8 != cmd[cmd.Length - 1])
 					{
@@ -869,7 +893,7 @@ namespace COMMPortLib
 					//---修正数据的实际长度
 					cmd[1] -= 2;
 					//---计算校验和
-					UInt16 crc16 = GenFunc.CRC_CRC16_Table(cmd, (cmd.Length - 2));
+					UInt16 crc16 = GenFunc.GenFuncCRC16Table(cmd, (cmd.Length - 2));
 					//---crc16的值
 					UInt16 crc16Val = cmd[cmd.Length - 2];
 					crc16Val = (UInt16)((crc16 << 8) + cmd[cmd.Length - 1]);
@@ -892,7 +916,7 @@ namespace COMMPortLib
 					crc32Val = (crc32Val << 8) + cmd[cmd.Length - 2];
 					crc32Val = (crc32Val << 8) + cmd[cmd.Length - 1];
 					//---获取CRC的校验和
-					UInt32 crc32 = GenFunc.CRC_CRC32_Table(cmd, (cmd.Length - 4));
+					UInt32 crc32 = GenFunc.GenFuncCRC32Table(cmd, (cmd.Length - 4));
 					//---判断CRC32的校验信息
 					if (crc32 != crc32Val)
 					{
@@ -918,9 +942,9 @@ namespace COMMPortLib
 				}
 			}
 			//---清空接收缓存区
-			this.usedSerialPort.DiscardInBuffer();
+			this.m_COMMSerialPort.DiscardInBuffer();
 			//---清空发送缓存区
-			this.usedSerialPort.DiscardOutBuffer();
+			this.m_COMMSerialPort.DiscardOutBuffer();
 			//---计算本次读取的耗时时间
 			this.m_COMMPortUsedTime = DateTime.Now - nowTime;
 			return _return;
@@ -982,10 +1006,10 @@ namespace COMMPortLib
 			int _return = 1;
 			int length = 0;
 			int i = 0;
-			if ((this.usedSerialPort != null) && (this.usedSerialPort.IsOpen))
+			if ((this.m_COMMSerialPort != null) && (this.m_COMMSerialPort.IsOpen))
 			{
 				//---检查缓存区中的数据是否发送完成并等待发送完成
-				while (this.usedSerialPort.BytesToWrite > 0)
+				while (this.m_COMMSerialPort.BytesToWrite > 0)
 				{
 					//---窗体函数的响应
 					Application.DoEvents();
@@ -1031,7 +1055,7 @@ namespace COMMPortLib
 				if (this.m_COMMPortSendCRC == (byte)USE_CRC.CRC_CHECKSUM)
 				{
 					//---获取CRC的校验和信息
-					byte checkSum = GenFunc.CRC_CheckSum(cmd, cmd.Length);
+					byte checkSum = GenFunc.GenFuncCRCCheckSum(cmd, cmd.Length);
 					//---重置缓存区的大小
 					Array.Resize<byte>(ref cmd, (cmd.Length + 1));
 					//---自动添加校验和信息
@@ -1042,7 +1066,7 @@ namespace COMMPortLib
 				}
 				else if (this.m_COMMPortSendCRC == (byte)USE_CRC.CRC_CRC8)
 				{
-					byte crc8 = GenFunc.CRC_CRC8_Table(cmd, cmd.Length);
+					byte crc8 = GenFunc.GenFuncCRC8Table(cmd, cmd.Length);
 					//---重置缓存区的大小
 					Array.Resize<byte>(ref cmd, (cmd.Length + 1));
 					//---自动添加校验和信息
@@ -1053,7 +1077,7 @@ namespace COMMPortLib
 				}
 				else if (this.m_COMMPortSendCRC == (byte)USE_CRC.CRC_CRC16)
 				{
-					int crc16 = GenFunc.CRC_CRC16_Table(cmd, cmd.Length);
+					int crc16 = GenFunc.GenFuncCRC16Table(cmd, cmd.Length);
 					//---重置缓存区的大小
 					Array.Resize<byte>(ref cmd, (cmd.Length + 2));
 					//---自动添加校验和信息
@@ -1065,7 +1089,7 @@ namespace COMMPortLib
 				}
 				else if (this.m_COMMPortSendCRC == (byte)USE_CRC.CRC_CRC32)
 				{
-					UInt32 crc32 = GenFunc.CRC_CRC32_Table(cmd, cmd.Length);
+					UInt32 crc32 = GenFunc.GenFuncCRC32Table(cmd, cmd.Length);
 					//---重置缓存区的大小
 					Array.Resize<byte>(ref cmd, (cmd.Length + 4));
 					//---自动添加校验和信息
@@ -1099,7 +1123,7 @@ namespace COMMPortLib
 				}
 				_return = 0;
 				//---发送指定长度的数据
-				this.usedSerialPort.Write(cmd, 0, cmd.Length);
+				this.m_COMMSerialPort.Write(cmd, 0, cmd.Length);
 			}
 			else
 			{
@@ -1135,7 +1159,7 @@ namespace COMMPortLib
 		public override int ReadResponse(ref byte[] cmd, int time = 200)
 		{
 			int _return = 1;
-			if ((this.usedSerialPort != null) && (this.usedSerialPort.IsOpen))
+			if ((this.m_COMMSerialPort != null) && (this.m_COMMSerialPort.IsOpen))
 			{
 				if (this.m_COMMPortSize > 250)
 				{
@@ -1218,12 +1242,12 @@ namespace COMMPortLib
 			{
 				this.m_COMMPortErrMsg = string.Empty;
 				//---判断串口类是否有效
-				if (this.usedSerialPort == null)
+				if (this.m_COMMSerialPort == null)
 				{
-					this.usedSerialPort = new SerialPort();
+					this.m_COMMSerialPort = new SerialPort();
 				}
 				//---判断当前端口是否可用
-				if (this.usedSerialPort.IsOpen)
+				if (this.m_COMMSerialPort.IsOpen)
 				{
 					//---响应窗体事件
 					Application.DoEvents();
@@ -1235,70 +1259,70 @@ namespace COMMPortLib
 							this.UnRegisterEventHandler();
 						}
 						//---关闭端口
-						this.usedSerialPort.Close();
+						this.m_COMMSerialPort.Close();
 					}
 					catch
 					{
 						//---端口关闭出现错误
-						this.m_COMMPortErrMsg += "端口：" + this.usedSerialPort.PortName + "被其他应用占用，初始化失败!\r\n";
+						this.m_COMMPortErrMsg += "端口：" + this.m_COMMSerialPort.PortName + "被其他应用占用，初始化失败!\r\n";
 						_return = 2;
 						goto GoToExit;
 					}
 				}
 				//---获取端口名称
-				if (this.usedSerialPort.PortName != name)
+				if (this.m_COMMSerialPort.PortName != name)
 				{
-					this.usedSerialPort.PortName = name;
+					this.m_COMMSerialPort.PortName = name;
 					this.m_COMMPortName = name;
 				}
 				//---获取端口序号
 				this.m_COMMPortIndex = Convert.ToInt16(this.m_COMMPortName.Replace("COM", ""), 10);
 				//---设置波特率
-				if (this.usedSerialPort.BaudRate != this.baudRate)
+				if (this.m_COMMSerialPort.BaudRate != this.baudRate)
 				{
-					this.usedSerialPort.BaudRate = this.baudRate;
+					this.m_COMMSerialPort.BaudRate = this.baudRate;
 				}
 				//---设置数据位
-				if (this.usedSerialPort.DataBits != this.dataBits)
+				if (this.m_COMMSerialPort.DataBits != this.dataBits)
 				{
-					this.usedSerialPort.DataBits = this.dataBits;
+					this.m_COMMSerialPort.DataBits = this.dataBits;
 				}
 				//---设置停止位
-				if (this.usedSerialPort.StopBits != (StopBits)this.stopBits)
+				if (this.m_COMMSerialPort.StopBits != (StopBits)this.stopBits)
 				{
-					this.usedSerialPort.StopBits = (StopBits)this.stopBits;
+					this.m_COMMSerialPort.StopBits = (StopBits)this.stopBits;
 				}
 				//---设置校验位
 				Parity tmpParityBits = this.SerialCOMMPortGetParityBits(this.parity);
-				if (this.usedSerialPort.Parity != tmpParityBits)
+				if (this.m_COMMSerialPort.Parity != tmpParityBits)
 				{
-					this.usedSerialPort.Parity = tmpParityBits;
+					this.m_COMMSerialPort.Parity = tmpParityBits;
 				}
 				//---打开端口
 				try
 				{
 					//---打开端口
-					this.usedSerialPort.Open();
+					this.m_COMMSerialPort.Open();
 					//---判断端口打开是否成功
-					if (this.usedSerialPort.IsOpen)
+					if (this.m_COMMSerialPort.IsOpen)
 					{
-						this.m_COMMPortErrMsg += "端口：" + this.usedSerialPort.PortName + "打开成功!\r\n";
+						this.m_COMMPortErrMsg += "端口：" + this.m_COMMSerialPort.PortName + "打开成功!\r\n";
 						//---清空接收缓存区
-						this.usedSerialPort.DiscardInBuffer();
+						this.m_COMMSerialPort.DiscardInBuffer();
 						//---清空发送缓存区
-						this.usedSerialPort.DiscardOutBuffer();
+						this.m_COMMSerialPort.DiscardOutBuffer();
 						_return = 0;
 					}
 					else
 					{
-						this.m_COMMPortErrMsg += "端口：" + this.usedSerialPort.PortName + "打开失败!\r\n";
+						this.m_COMMPortErrMsg += "端口：" + this.m_COMMSerialPort.PortName + "打开失败!\r\n";
 						_return = 3;
 						goto GoToExit;
 					}
 				}
 				catch
 				{
-					this.m_COMMPortErrMsg += "端口：" + this.usedSerialPort.PortName + "端口被其他应用占用，打开失败!\r\n";
+					this.m_COMMPortErrMsg += "端口：" + this.m_COMMSerialPort.PortName + "端口被其他应用占用，打开失败!\r\n";
 					_return = 4;
 					goto GoToExit;
 				}
@@ -1392,7 +1416,7 @@ namespace COMMPortLib
 			this.m_COMMPortErrMsg = string.Empty;
 			if (((name != string.Empty) && (name != null) && (name != "") && (name.StartsWith("COM"))))
 			{
-				if ((this.usedSerialPort != null) && (this.usedSerialPort.PortName == name) && (this.usedSerialPort.IsOpen))
+				if ((this.m_COMMSerialPort != null) && (this.m_COMMSerialPort.PortName == name) && (this.m_COMMSerialPort.IsOpen))
 				{
 					//---响应窗体事件
 					Application.DoEvents();
@@ -1403,7 +1427,7 @@ namespace COMMPortLib
 						{
 							this.UnRegisterEventHandler();
 						}
-						this.usedSerialPort.Close();
+						this.m_COMMSerialPort.Close();
 						_return = 0;
 					}
 					catch
@@ -1484,9 +1508,9 @@ namespace COMMPortLib
 		/// <returns></returns>
 		public override bool IsAttached()
 		{
-			if (this.usedSerialPort != null)
+			if (this.m_COMMSerialPort != null)
 			{
-				return this.usedSerialPort.IsOpen;
+				return this.m_COMMSerialPort.IsOpen;
 			}
 			return false;
 		}
@@ -1498,11 +1522,11 @@ namespace COMMPortLib
 		/// <returns></returns>
 		public override bool IsAttached(string name)
 		{
-			if (this.usedSerialPort != null)
+			if (this.m_COMMSerialPort != null)
 			{
-				if (this.usedSerialPort.PortName == name)
+				if (this.m_COMMSerialPort.PortName == name)
 				{
-					return this.usedSerialPort.IsOpen;
+					return this.m_COMMSerialPort.IsOpen;
 				}
 			}
 			return false;
@@ -1573,12 +1597,12 @@ namespace COMMPortLib
 		/// <param name="msg"></param>
 		public override void RegisterEventHandler(RichTextBox msg = null)
 		{
-			if (this.usedSerialPort != null)
+			if (this.m_COMMSerialPort != null)
 			{
 				if (this.m_COMMEnableDataReceivedEvent!=true)
 				{
 					//---注册接收事件处理函数
-					this.usedSerialPort.DataReceived += DataReceivedEvent;
+					this.m_COMMSerialPort.DataReceived += DataReceivedEvent;
 					this.m_COMMEnableDataReceivedEvent = true;
 				}
 			}
@@ -1589,12 +1613,12 @@ namespace COMMPortLib
 		/// </summary>
 		public override void UnRegisterEventHandler()
 		{
-			if (this.usedSerialPort != null)
+			if (this.m_COMMSerialPort != null)
 			{
 				if (this.m_COMMEnableDataReceivedEvent)
 				{
 					//---注销接收事件处理函数
-					this.usedSerialPort.DataReceived -= DataReceivedEvent;
+					this.m_COMMSerialPort.DataReceived -= DataReceivedEvent;
 					this.m_COMMEnableDataReceivedEvent = false;
 				}
 			}
@@ -1636,7 +1660,7 @@ namespace COMMPortLib
 			//---判断发生的事件类型
 			if (e.ToString().Contains("SerialDataReceivedEventArgs"))
 			{
-				if ((this.usedSerialPort != null) && (this.usedSerialPort.IsOpen) && (this.usedSerialPort.BytesToRead > 0))
+				if ((this.m_COMMSerialPort != null) && (this.m_COMMSerialPort.IsOpen) && (this.m_COMMSerialPort.BytesToRead > 0))
 				{
 					if (this.ReadResponse(200)==0)
 					{

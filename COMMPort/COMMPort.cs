@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Windows.Forms;
 
 namespace COMMPortLib
@@ -187,14 +188,19 @@ namespace COMMPortLib
 		/// </summary>
 		private int deviceIDIndex = 0;
 
-		#endregion 变量定义
-
-		#region 属性定义
-
-		/// <summary>
-		///
+        /// <summary>
+		/// 使用的串口信息
 		/// </summary>
-		public virtual string m_COMMPortName
+		private SerialPort commSerialPort = null;
+
+        #endregion 变量定义
+
+        #region 属性定义
+
+        /// <summary>
+        ///
+        /// </summary>
+        public virtual string m_COMMPortName
 		{
 			get
 			{
@@ -454,14 +460,30 @@ namespace COMMPortLib
 			}
 		}
 
-		#endregion 属性定义
 
-		#region 构造函数
+        /// <summary>
+        /// 使用的串口
+        /// </summary>
+        public virtual SerialPort m_COMMSerialPort
+        {
+            get
+            {
+                return this.commSerialPort;
+            }
+            set
+            {
+                this.commSerialPort = value;
+            }
+        }
 
-		/// <summary>
-		///
-		/// </summary>
-		public COMMPort()
+        #endregion 属性定义
+
+        #region 构造函数
+
+        /// <summary>
+        ///
+        /// </summary>
+        public COMMPort()
 		{
 		}
 

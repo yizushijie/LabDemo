@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenFunc_CRC.cs" />
+    <Compile Include="GenFunc_Equal.cs" />
+    <Compile Include="GenFunc_Memset.cs" />
+    <Compile Include="GenFunc_Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

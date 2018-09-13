@@ -2,6 +2,7 @@
 using MessageBoxPlusLib;
 using RichTextBoxPlusLib;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DigitalControlRFLib
@@ -2757,6 +2758,10 @@ namespace DigitalControlRFLib
 			int i = 0;
 			for ( i = 0; i < 63; i++)
 			{
+                if (genPower.Value==0)
+                {
+                    genPower.Value = (decimal)(-31.5);
+                }
 				genPower.Value +=(decimal)(0.5);
 				//---解码成功，此时自动将第一级的衰减开启到最大
 				switch (cmd)
@@ -2786,12 +2791,18 @@ namespace DigitalControlRFLib
 				{
 					return _return;
 				}
+                //---延时等待一段时间
+                //Thread.Sleep(300);
 				//---读取设备的解码状态
 				_return = this.DecodeRead(deviceID, msg);
 				if (_return==0)
 				{
 					break;
 				}
+                if (genPower.Value==0)
+                {
+                    break;
+                }
 			}
 			return _return;
 		}
