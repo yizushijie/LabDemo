@@ -373,7 +373,8 @@ namespace PreMakeToVSProject
             }
 			string configurations = "Debug" + "\", \"" + "Release";
 			//StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\KeilToVS.lua");
-			StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			//StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			StreamWriter file = new StreamWriter(Directory.GetParent(Path.GetDirectoryName(projectName)).FullName + "\\premake5.lua");
 			{
 				//
 				file.WriteLine("  solution \"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
@@ -497,7 +498,8 @@ namespace PreMakeToVSProject
             xmlRead.Close();
 			string configurations = "Debug" + "\", \"" + "Release";
 			//StreamWriter file =new StreamWriter(Path.GetDirectoryName(projectName) + "\\IARToVS.lua");
-			StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			//StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			StreamWriter file = new StreamWriter(Directory.GetParent(Path.GetDirectoryName(projectName)).FullName + "\\premake5.lua");
 			{
                 //
                 file.WriteLine("  solution \"" + Path.GetFileNameWithoutExtension(projectName) + "\"");

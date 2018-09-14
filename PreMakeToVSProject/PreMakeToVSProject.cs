@@ -130,39 +130,35 @@ namespace PreMakeToVSProject
 		/// <returns></returns>
 		private bool UsePreMakeToVsProject()
 		{
-			Process proc =null;
-			if (this.comboBox_SrcVersion.Text=="IAR")
+
+			string vsPath = null;
+			if (this.comboBox_SrcVersion.Text == "IAR")
 			{
-				proc=	new Process
-				{
-					StartInfo = new ProcessStartInfo
-					{
-						FileName = "premake5.exe",
-						Arguments = "--File=\"" + Path.GetDirectoryName(this.TextBox_SrcPath.Text) + "\\premake5.lua\" " + this.comboBox_VSVersion.Text,
-						UseShellExecute = false,
-						RedirectStandardOutput = true,
-						CreateNoWindow = true
-					}
-				};
+				vsPath = Directory.GetParent(Path.GetDirectoryName(this.TextBox_SrcPath.Text)).FullName;
 			}
 			else if (this.comboBox_SrcVersion.Text == "Keil")
 			{
-				proc = new Process
-				{
-					StartInfo = new ProcessStartInfo
-					{
-						FileName = "premake5.exe",
-						Arguments = "--File=\"" + Path.GetDirectoryName(this.TextBox_SrcPath.Text) + "\\premake5.lua\" " + this.comboBox_VSVersion.Text,
-						UseShellExecute = false,
-						RedirectStandardOutput = true,
-						CreateNoWindow = true
-					}
-				};
+				//vsPath = Path.GetDirectoryName(this.TextBox_SrcPath.Text);
+				vsPath = Directory.GetParent(Path.GetDirectoryName(this.TextBox_SrcPath.Text)).FullName;
 			}
 			else
 			{
 				return false;
 			}
+
+			//---启动进程
+			Process proc = new Process
+			{
+				StartInfo = new ProcessStartInfo
+				{
+					FileName = "premake5.exe",
+					//Arguments = "--File=\"" + Path.GetDirectoryName(this.TextBox_SrcPath.Text) + "\\premake5.lua\" " + this.comboBox_VSVersion.Text,
+					Arguments = "--File=\"" + vsPath + "\\premake5.lua\" " + this.comboBox_VSVersion.Text,
+					UseShellExecute = false,
+					RedirectStandardOutput = true,
+					CreateNoWindow = true
+				}
+			};
 			//---启动应用
 			proc.Start();
 			string makeOut = proc.StandardOutput.ReadToEnd();
@@ -178,7 +174,8 @@ namespace PreMakeToVSProject
 						DialogResult dialogResult = MessageBox.Show(@"Open Project ?", Text, MessageBoxButtons.YesNo);
 						if (dialogResult == DialogResult.Yes)
 						{
-							ProcessStartInfo psi = new ProcessStartInfo(Path.ChangeExtension(this.TextBox_SrcPath.Text, "sln"));
+							//ProcessStartInfo psi = new ProcessStartInfo(Path.ChangeExtension(this.TextBox_SrcPath.Text, "sln"));
+							ProcessStartInfo psi = new ProcessStartInfo(Path.ChangeExtension(vsPath, "sln"));
 							//{
 							//	UseShellExecute = true
 							//};
