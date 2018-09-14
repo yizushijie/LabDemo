@@ -55,6 +55,33 @@ namespace PreMakeToVSProject
 			}
 		}
 
+		public string GetPathAndProjectVersion(string srcVersion,Label lbl)
+		{
+			OpenFileDialog openFile = null;
+			if (srcVersion == "IAR")
+			{
+				//lbl.Visible = false;
+				openFile = new OpenFileDialog { Filter = @"IAR Project (*.ewp)|*.ewp" };
+			}
+			else if (srcVersion == "Keil")
+			{
+				//lbl.Visible = true;
+				openFile = new OpenFileDialog { Filter = @"Keil Project (*.uvprojx)|*.uvprojx|(*.uvproj)|*.uvproj" };
+			}
+			else
+			{
+				return null;
+			}
+			if (openFile.ShowDialog() != DialogResult.OK)
+			{
+				return null;
+			}
+			else
+			{
+				return openFile.FileName;
+			}
+		}
+
 
 		/// <summary>
 		/// 递归调用查找节点
@@ -325,7 +352,18 @@ namespace PreMakeToVSProject
 			xmlRead.Close();
 
             //---获取Keil的执行路径
+			//---Keil5
             string keilPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetProcessesByName("UV4")[0].MainModule.FileName);
+			if (keilPath==null)
+			{
+				//---keil4
+				keilPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetProcessesByName("UV3")[0].MainModule.FileName);
+			}
+			if (keilPath==null)
+			{
+				//---keil2
+				keilPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetProcessesByName("UV2")[0].MainModule.FileName);
+			}
             string includedirs= string.Join("\", \"", prjcfg._includePath);
             if (keilPath!=null)
             {
@@ -333,12 +371,14 @@ namespace PreMakeToVSProject
                 keilPath =keilPath.Replace("UV4", "ARM/RV31");
                 includedirs += "\", \"" + keilPath;
             }
-            //StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\KeilToVS.lua");
-            StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			string configurations = "Debug" + "\", \"" + "Release";
+			//StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\KeilToVS.lua");
+			StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
 			{
 				//
 				file.WriteLine("  solution \"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
-				file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
+				//file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
+				file.WriteLine("  configurations { \"" + configurations + "\" }");
 				file.WriteLine("  project\"" + Path.GetFileNameWithoutExtension(projectName)+ "\"");
 				file.WriteLine("  kind \"ConsoleApp\"");
 				file.WriteLine("  language \"C\"");
@@ -455,14 +495,15 @@ namespace PreMakeToVSProject
             }
             while (!xmlRead.EOF);
             xmlRead.Close();
-
-            //StreamWriter file =new StreamWriter(Path.GetDirectoryName(projectName) + "\\IARToVS.lua");
-            StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			string configurations = "Debug" + "\", \"" + "Release";
+			//StreamWriter file =new StreamWriter(Path.GetDirectoryName(projectName) + "\\IARToVS.lua");
+			StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
 			{
                 //
                 file.WriteLine("  solution \"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
-                file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
-                file.WriteLine("  project\"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
+				//file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
+				file.WriteLine("  configurations { \"" + configurations + "\" }");
+				file.WriteLine("  project\"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
                 file.WriteLine("  kind \"ConsoleApp\"");
                 file.WriteLine("  language \"C\"");
                 file.WriteLine("  filter \"configurations:" + prjcfg._name + "\"");
