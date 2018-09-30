@@ -12,6 +12,7 @@ namespace PreMakeToVSProject
 	{
         #region 变量定义
 
+		/*
         string IncOverride =
            "   premake.override(premake.vstudio.vc2010, \"includePath\", function(base,cfg)\r\n" +
            "   local dirs = premake.vstudio.path(cfg, cfg.sysincludedirs)\r\n" +
@@ -19,7 +20,7 @@ namespace PreMakeToVSProject
            "   premake.vstudio.vc2010.element(\"IncludePath\", nil, \"%s\", table.concat(dirs, \";\"))\r\n" +
            "   end\r\n" +
            "end)";
-
+		*/
         #endregion
 
 
@@ -288,8 +289,8 @@ namespace PreMakeToVSProject
 				prjcfg._define.Add("__interrupt=");
 				prjcfg._define.Add("__packed=");
 				prjcfg._define.Add("__weak=");
-                prjcfg._define.Add("__attribute__((x))=");
-                prjcfg._define.Add("__STATIC_INLINE=");
+                //prjcfg._define.Add("__attribute__((x))=");
+                //prjcfg._define.Add("__STATIC_INLINE=");
 				//---获取预包含的头文件
 				//subXmlRead.ReadToFollowing("PreInclude");
 				//prjcfg._preInclude = this.GetKeilSubNodeValue(subXmlRead,';');
@@ -371,15 +372,15 @@ namespace PreMakeToVSProject
                 keilPath =keilPath.Replace("UV4", "ARM/RV31");
                 includedirs += "\", \"" + keilPath;
             }
-			string configurations = "Debug" + "\", \"" + "Release";
+			//string configurations = "Debug" + "\", \"" + "Release";
 			//StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\KeilToVS.lua");
-			//StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
-			StreamWriter file = new StreamWriter(Directory.GetParent(Path.GetDirectoryName(projectName)).FullName + "\\premake5.lua");
+			StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			//StreamWriter file = new StreamWriter(Directory.GetParent(Path.GetDirectoryName(projectName)).FullName + "\\premake5.lua");
 			{
 				//
 				file.WriteLine("  solution \"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
-				//file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
-				file.WriteLine("  configurations { \"" + configurations + "\" }");
+				file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
+				//file.WriteLine("  configurations { \"" + configurations + "\" }");
 				file.WriteLine("  project\"" + Path.GetFileNameWithoutExtension(projectName)+ "\"");
 				file.WriteLine("  kind \"ConsoleApp\"");
 				file.WriteLine("  language \"C\"");
@@ -454,8 +455,8 @@ namespace PreMakeToVSProject
                 prjcfg._define.Add("__interrupt=");
                 prjcfg._define.Add("__packed=");
                 prjcfg._define.Add("__weak=");
-                prjcfg._define.Add("__attribute__((x))=");
-                prjcfg._define.Add("__STATIC_INLINE=");
+                //prjcfg._define.Add("__attribute__((x))=");
+                //prjcfg._define.Add("__STATIC_INLINE=");
                 //---获取预包含的头文件
                 prjcfg._preInclude = this.GetIarSubNodeValue(subXmlRead, "PreInclude");
                 //---获取包含文件的路径
@@ -496,15 +497,15 @@ namespace PreMakeToVSProject
             }
             while (!xmlRead.EOF);
             xmlRead.Close();
-			string configurations = "Debug" + "\", \"" + "Release";
+			//string configurations = "Debug" + "\", \"" + "Release";
 			//StreamWriter file =new StreamWriter(Path.GetDirectoryName(projectName) + "\\IARToVS.lua");
-			//StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
-			StreamWriter file = new StreamWriter(Directory.GetParent(Path.GetDirectoryName(projectName)).FullName + "\\premake5.lua");
+			StreamWriter file = new StreamWriter(Path.GetDirectoryName(projectName) + "\\premake5.lua");
+			//StreamWriter file = new StreamWriter(Directory.GetParent(Path.GetDirectoryName(projectName)).FullName + "\\premake5.lua");
 			{
                 //
                 file.WriteLine("  solution \"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
-				//file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
-				file.WriteLine("  configurations { \"" + configurations + "\" }");
+				file.WriteLine("  configurations { \"" + string.Join("\", \"", prjcfg._name) + "\" }");
+				//file.WriteLine("  configurations { \"" + configurations + "\" }");
 				file.WriteLine("  project\"" + Path.GetFileNameWithoutExtension(projectName) + "\"");
                 file.WriteLine("  kind \"ConsoleApp\"");
                 file.WriteLine("  language \"C\"");

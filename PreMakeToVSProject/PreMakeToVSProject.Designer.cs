@@ -39,6 +39,7 @@
 			this.checkBox_CloseApplication = new System.Windows.Forms.CheckBox();
 			this.checkBox_OpenVSProject = new System.Windows.Forms.CheckBox();
 			this.label_KeilNote = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// TextBox_SrcPath
@@ -80,8 +81,8 @@
 			this.comboBox_SrcVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBox_SrcVersion.FormattingEnabled = true;
 			this.comboBox_SrcVersion.Items.AddRange(new object[] {
-            "IAR",
-            "Keil"});
+            "Keil",
+            "IAR"});
 			this.comboBox_SrcVersion.Location = new System.Drawing.Point(23, 78);
 			this.comboBox_SrcVersion.Name = "comboBox_SrcVersion";
 			this.comboBox_SrcVersion.Size = new System.Drawing.Size(82, 20);
@@ -137,8 +138,6 @@
 			// checkBox_OpenVSProject
 			// 
 			this.checkBox_OpenVSProject.AutoSize = true;
-			this.checkBox_OpenVSProject.Checked = true;
-			this.checkBox_OpenVSProject.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBox_OpenVSProject.Location = new System.Drawing.Point(291, 79);
 			this.checkBox_OpenVSProject.Name = "checkBox_OpenVSProject";
 			this.checkBox_OpenVSProject.Size = new System.Drawing.Size(84, 16);
@@ -153,15 +152,27 @@
 			this.label_KeilNote.ForeColor = System.Drawing.Color.Red;
 			this.label_KeilNote.Location = new System.Drawing.Point(21, 116);
 			this.label_KeilNote.Name = "label_KeilNote";
-			this.label_KeilNote.Size = new System.Drawing.Size(413, 12);
+			this.label_KeilNote.Size = new System.Drawing.Size(427, 12);
 			this.label_KeilNote.TabIndex = 12;
-			this.label_KeilNote.Text = "注意：将Keil转换成VS工程，必须保证Keil已经打开，否则出错！！！";
+			this.label_KeilNote.Text = "注意：1.将Keil转换成VS工程，必须保证Keil已经打开，否则出错！！！";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label1.ForeColor = System.Drawing.Color.Red;
+			this.label1.Location = new System.Drawing.Point(18, 135);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(386, 12);
+			this.label1.TabIndex = 13;
+			this.label1.Text = "      2.工程路径以及工程的命名中不能有空格，否则出错！！！";
 			// 
 			// PreMakeToVSProject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(519, 137);
+			this.ClientSize = new System.Drawing.Size(519, 156);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.label_KeilNote);
 			this.Controls.Add(this.checkBox_OpenVSProject);
 			this.Controls.Add(this.checkBox_CloseApplication);
@@ -195,6 +206,7 @@
 		private System.Windows.Forms.CheckBox checkBox_CloseApplication;
 		private System.Windows.Forms.CheckBox checkBox_OpenVSProject;
 		private System.Windows.Forms.Label label_KeilNote;
+		private System.Windows.Forms.Label label1;
 	}
 }
 

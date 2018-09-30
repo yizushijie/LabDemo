@@ -46,7 +46,6 @@ namespace PreMakeToVSProject
 			this.comboBox_VSVersion.SelectedIndex = 0;
 
 			this.RegistrationEvent();
-
             //---通过加载文件的不同自适应当前文档
             if (this.TextBox_SrcPath.Text != string.Empty)
             {
@@ -65,7 +64,6 @@ namespace PreMakeToVSProject
                     }
                 }
             }
-
         }
 
 		/// <summary>
@@ -134,12 +132,13 @@ namespace PreMakeToVSProject
 			string vsPath = null;
 			if (this.comboBox_SrcVersion.Text == "IAR")
 			{
-				vsPath = Directory.GetParent(Path.GetDirectoryName(this.TextBox_SrcPath.Text)).FullName;
+                vsPath = Path.GetDirectoryName(this.TextBox_SrcPath.Text);
+                //vsPath = Directory.GetParent(Path.GetDirectoryName(this.TextBox_SrcPath.Text)).FullName;
 			}
 			else if (this.comboBox_SrcVersion.Text == "Keil")
 			{
-				//vsPath = Path.GetDirectoryName(this.TextBox_SrcPath.Text);
-				vsPath = Directory.GetParent(Path.GetDirectoryName(this.TextBox_SrcPath.Text)).FullName;
+				vsPath = Path.GetDirectoryName(this.TextBox_SrcPath.Text);
+				//vsPath = Directory.GetParent(Path.GetDirectoryName(this.TextBox_SrcPath.Text)).FullName;
 			}
 			else
 			{
@@ -174,8 +173,8 @@ namespace PreMakeToVSProject
 						DialogResult dialogResult = MessageBox.Show(@"Open Project ?", Text, MessageBoxButtons.YesNo);
 						if (dialogResult == DialogResult.Yes)
 						{
-							//ProcessStartInfo psi = new ProcessStartInfo(Path.ChangeExtension(this.TextBox_SrcPath.Text, "sln"));
-							ProcessStartInfo psi = new ProcessStartInfo(Path.ChangeExtension(vsPath, "sln"));
+							ProcessStartInfo psi = new ProcessStartInfo(Path.ChangeExtension(this.TextBox_SrcPath.Text, "sln"));
+							//ProcessStartInfo psi = new ProcessStartInfo(Path.ChangeExtension(vsPath, "sln"));
 							//{
 							//	UseShellExecute = true
 							//};
