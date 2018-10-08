@@ -118,10 +118,15 @@ namespace COMMPortLib
 		/// </summary>
 		private bool commPortSTATE = false;
 
-		/// <summary>
-		/// 当前端口发送数据缓存区的大小
-		/// </summary>
-		private int commPortSize = 64;
+        /// <summary>
+        /// 是否需要刷新设备
+        /// </summary>
+        private bool commPortRefresh = false;
+
+        /// <summary>
+        /// 当前端口发送数据缓存区的大小
+        /// </summary>
+        private int commPortSize = 64;
 
 		/// <summary>
 		/// 接收CRC等级
@@ -242,10 +247,25 @@ namespace COMMPortLib
 			}
 		}
 
-		/// <summary>
-		/// 当前端口发送数据缓存区的大小
-		/// </summary>
-		public virtual int m_COMMPortSize
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual bool m_COMMPortRefresh
+        {
+            get
+            {
+                return this.commPortRefresh;
+            }
+            set
+            {
+                this.commPortRefresh = value;
+            }
+        }
+
+        /// <summary>
+        /// 当前端口发送数据缓存区的大小
+        /// </summary>
+        public virtual int m_COMMPortSize
 		{
 			get
 			{
@@ -774,8 +794,9 @@ namespace COMMPortLib
 		/// 系统消息通知设备的拔插
 		/// </summary>
 		/// <param name="m"></param>
-		public virtual void DevicesChangedEvent(ref Message m, ComboBox cbb = null, RichTextBox msg = null)
+		public virtual int DevicesChangedEvent(ref Message m, ComboBox cbb = null, RichTextBox msg = null)
 		{
+            return 0;
 		}
 
 		/// <summary>
